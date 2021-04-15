@@ -1,0 +1,47 @@
+This is BibTeX, Version 0.99d (MiKTeX 2.9.7380 64-bit)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: topic.aux
+The style file: aasjournal.bst
+Database file #1: topic.bib
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+You've used 1 entry,
+            3168 wiz_defined-function locations,
+            658 strings with 4708 characters,
+and the built_in function-call counts, 362 in all, are:
+= -- 29
+> -- 12
+< -- 1
++ -- 4
+- -- 3
+* -- 24
+:= -- 70
+add.period$ -- 1
+call.type$ -- 1
+change.case$ -- 4
+chr.to.int$ -- 1
+cite$ -- 1
+duplicate$ -- 15
+empty$ -- 29
+format.name$ -- 4
+if$ -- 71
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 1
+newline$ -- 11
+num.names$ -- 4
+pop$ -- 3
+preamble$ -- 1
+purify$ -- 4
+quote$ -- 0
+skip$ -- 16
+stack$ -- 0
+substring$ -- 20
+swap$ -- 0
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 9
+warning$ -- 0
+while$ -- 4
+width$ -- 0
+write$ -- 18
