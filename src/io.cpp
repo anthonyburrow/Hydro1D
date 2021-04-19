@@ -42,10 +42,10 @@ namespace mylib {
                     cout << "  Number of time steps: " << nIter << endl;
                     break;
                 case 3 :
-                    double duration;
-                    iss >> duration;
-                    params.duration = duration;
-                    cout << "  Time duration: " << duration << endl;
+                    double initDt;
+                    iss >> initDt;
+                    params.initDt = initDt;
+                    cout << "  Initial dt: " << initDt << endl;
                     break;
                 default :
                     cout << "Too many lines in param file" << endl;

@@ -10,7 +10,7 @@ namespace mylib {
         int nZones;
         double initRMax;
         double nIter;
-        double duration;
+        double initDt;
     };
 
     hydroParams readParams(const std::string &filename);

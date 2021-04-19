@@ -7,6 +7,7 @@
 
 using namespace std;
 
+const double zero = 1e-70;
 const double pi4 = 4 * M_PI;
 const double pi4_sq = pi4 * pi4;
 const double pi4_3 = pi4 / 3;
@@ -22,7 +23,7 @@ const double c = 2.99792458e10;   // cm s^-1
 namespace myHydro {
 
     void calcDM(myHydro::Hydro &hydro) {
-        double RCube = 0;
+        double RCube = zero;
         double nextRCube;
 
         for (int i = 0; i < hydro.nBoundaries; i++) {
@@ -43,7 +44,7 @@ namespace myHydro {
     }
 
     void calcXM(myHydro::Hydro &hydro) {
-        hydro.XM[0] = 0;   // BC
+        hydro.XM[0] = zero;   // BC
 
         for (int i = 1; i < hydro.nBoundaries; i++) {
             hydro.XM[i + 1] = hydro.XM[i] + hydro.DM[i];
@@ -85,7 +86,7 @@ namespace myHydro {
     }
 
     void calcV(myHydro::Hydro &hydro) {
-        double RCube = 0;
+        double RCube = zero;
         double nextRCube;
 
         for (int i = 0; i < hydro.nZones; i++) {
@@ -135,7 +136,7 @@ namespace myHydro {
         double prevDM_AK = hydro.DM[0] * hydro.AK[0];
         double nextDM_AK;
 
-        hydro.AL[0] = 0;   // BC
+        hydro.AL[0] = zero;   // BC
 
         for (int i = 1; i < hydro.nZones; i++) {
             nextT4 = pow(hydro.Tht[i], 4);
@@ -184,6 +185,22 @@ namespace myHydro {
 
     void calcP(myHydro::Hydro &hydro) {
         // P as a function of T, V
+    }
+
+    void calcDt(myHydro::Hydro &hydro) {
+        // Update dt for stability
+        double newDtht = zero;
+        double tmpDt;
+
+        for (int i = 0; i < hydro.nZones; i++) {
+            tmpDt = 0.02 * hydro.V[i] * hydro.dtht /
+                        abs(hydro.V[i] - hydro.Vprev[i]);
+            
+            if (i = 0 || tmpDt < newDtht) { newDtht = tmpDt; }
+        }
+
+        hydro.dt = 0.5 * (hydro.dtht + newDtht);
+        hydro.dtht = newDtht;
     }
 
 }

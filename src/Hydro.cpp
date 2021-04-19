@@ -15,10 +15,12 @@ namespace myHydro {
         nZones(params.nZones),
         nBoundaries(nZones + 1),
         nIter(params.nIter),
-        dt(params.duration / nIter),
         initRMax(params.initRMax)
     {
         iter = 0;
+
+        dt = params.initDt;
+        dtht = params.initDt;   // half-time time interval
 
         initVectors();
     }
@@ -34,7 +36,7 @@ namespace myHydro {
         myHydro::initP(*this);
 
         V.reserve(nZones);
-        Vprev.reserve(nZones);
+        Vprev.reserve(nZones);   // Previous V calculation
         Vht.reserve(nZones);
         myHydro::initV(*this);
 
@@ -77,6 +79,8 @@ namespace myHydro {
 
         myHydro::calcT(*this);
         myHydro::calcP(*this);
+
+        myHydro::calcDt(*this);
 
         iter++;
     }

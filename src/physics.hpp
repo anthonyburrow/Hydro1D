@@ -7,15 +7,11 @@
 namespace myHydro {
 
     void calcDM(myHydro::Hydro &hydro);
-
     void calcDMb(myHydro::Hydro &hydro);
-
     void calcXM(myHydro::Hydro &hydro);
 
     void calcR(myHydro::Hydro &hydro);
-
     void calcU(myHydro::Hydro &hydro);
-
     void calcV(myHydro::Hydro &hydro);
 
     void calcQ(myHydro::Hydro &hydro);
@@ -29,5 +25,7 @@ namespace myHydro {
 
     void calcT(myHydro::Hydro &hydro);
     void calcP(myHydro::Hydro &hydro);
+
+    void calcDt(myHydro::Hydro &hydro);
 
 }

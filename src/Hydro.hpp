@@ -14,8 +14,10 @@ namespace myHydro {
             const int nBoundaries;
             int iter;
             const int &nIter;
-            const double &dt;
             const double &initRMax;
+
+            double dt;
+            double dtht;
 
             // Physical quantities
             //   b -> boundary alternative
