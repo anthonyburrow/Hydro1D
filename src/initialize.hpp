@@ -4,8 +4,8 @@
 
 #include "Hydro.hpp"
 
-namespace myHydro {
-
+namespace myHydro
+{
     void initR(myHydro::Hydro &hydro);
 
     void initU(myHydro::Hydro &hydro);
@@ -15,5 +15,4 @@ namespace myHydro {
     void initV(myHydro::Hydro &hydro);
 
     void initT(myHydro::Hydro &hydro);
-
 }

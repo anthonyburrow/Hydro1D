@@ -4,9 +4,10 @@
 #include <string>
 #include <vector>
 
-namespace mylib {
-
-    struct hydroParams {
+namespace myHydro
+{
+    struct hydroParams
+    {
         int nZones;
         double initRMax;
         double nIter;
@@ -14,5 +15,4 @@ namespace mylib {
     };
 
     hydroParams readParams(const std::string &filename);
-
 }

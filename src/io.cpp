@@ -7,22 +7,25 @@
 
 using namespace std;
 
-namespace mylib {
-
-    mylib::hydroParams readParams(const string &filename) {
+namespace myHydro
+{
+    myHydro::hydroParams readParams(const string &filename)
+    {
         cout << "Reading from parameter file: " << filename << endl;
 
         ifstream param_file(filename);
         string line;
-        mylib::hydroParams params;
+        myHydro::hydroParams params;
 
         int count = 0;
-        while (getline(param_file, line)) {
+        while (getline(param_file, line))
+        {
             if (line[0] == '#' || line[0] == '\0') { continue; }
 
             stringstream iss(line);
 
-            switch(count) {
+            switch(count)
+            {
                 case 0 :
                     int nZones;
                     iss >> nZones;
@@ -57,5 +60,4 @@ namespace mylib {
 
         return params;
     }
-
 }

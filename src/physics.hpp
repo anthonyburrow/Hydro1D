@@ -4,8 +4,8 @@
 
 #include "Hydro.hpp"
 
-namespace myHydro {
-
+namespace myHydro
+{
     void calcDM(myHydro::Hydro &hydro);
     void calcDMb(myHydro::Hydro &hydro);
     void calcXM(myHydro::Hydro &hydro);
@@ -27,5 +27,4 @@ namespace myHydro {
     void calcP(myHydro::Hydro &hydro);
 
     void calcDt(myHydro::Hydro &hydro);
-
 }

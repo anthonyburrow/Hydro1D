@@ -8,10 +8,10 @@
 
 using namespace std;
 
-namespace myHydro {
-
+namespace myHydro
+{
     Hydro::Hydro(const string &paramFile)
-      : params(mylib::readParams(paramFile)),
+      : params(myHydro::readParams(paramFile)),
         nZones(params.nZones),
         nBoundaries(nZones + 1),
         nIter(params.nIter),
@@ -25,7 +25,8 @@ namespace myHydro {
         initVectors();
     }
 
-    void Hydro::initVectors() {
+    void Hydro::initVectors()
+    {
         U.reserve(nBoundaries);
         myHydro::initU(*this);
 
@@ -64,11 +65,10 @@ namespace myHydro {
         myHydro::initP(*this);
     }
 
-    void Hydro::iterate() {
+    void Hydro::iterate()
+    {
         myHydro::calcU(*this);
-
         myHydro::calcR(*this);
-
         myHydro::calcV(*this);
 
         myHydro::calcQ(*this);
@@ -87,5 +87,4 @@ namespace myHydro {
 
         iter++;
     }
-
 }
