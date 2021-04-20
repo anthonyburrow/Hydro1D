@@ -1,6 +1,7 @@
 #include <vector>
 
 #include "Hydro.hpp"
+#include "constants.hpp"
 
 using namespace std;
 
@@ -45,5 +46,10 @@ namespace myHydro
     void initP(myHydro::Hydro &hydro)
     {
         // intitial pressure profile
+        // - zero for free-fall testing
+        for (int i = 0; i < hydro.nZones; i++)
+        {
+            hydro.P[i] = zero;
+        }
     }
 }

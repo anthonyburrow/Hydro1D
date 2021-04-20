@@ -1,27 +1,10 @@
-#define _USE_MATH_DEFINES
-
 #include <vector>
 #include <cmath>
 
 #include "Hydro.hpp"
+#include "constants.hpp"
 
 using namespace std;
-
-// Math constants
-const double zero = 1e-70;
-const double pi4 = 4 * M_PI;
-const double pi4_sq = pi4 * pi4;
-const double pi4_3 = pi4 / 3;
-const double one_third = 1 / 3;
-
-// Newton gravitation constant
-const double G = 132709742648;   // km^3 Msol^-1 s^-2
-
-// Radiation constant
-// const double a = 7.5657e-15;   // erg cm^-3 K^-4
-
-// Speed of light
-// const double c = 2.99792458e10;   // cm s^-1
 
 namespace myHydro
 {
@@ -84,8 +67,8 @@ namespace myHydro
         for (int i = 1; i < nZones; i++)
         {
             R_sq = pow(hydro.R[i], 2);
-            dP = hydro.P[i] - hydro.P[i - 1];   // P at the boundary
-            dQ = hydro.Q[i] - hydro.Q[i - 1];   // Q at the boundary
+            dP = hydro.P[i] - hydro.P[i - 1];   // P at each boundary
+            dQ = hydro.Q[i] - hydro.Q[i - 1];   // Q at each boundary
 
             hydro.U[i] = hydro.U[i] +
                          hydro.dt * (pi4_sq * R_sq * (dP + dQ) / hydro.DMb[i] -
