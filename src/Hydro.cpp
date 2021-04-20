@@ -26,23 +26,17 @@ namespace myHydro {
     }
 
     void Hydro::initVectors() {
-        R.reserve(nBoundaries);
-        myHydro::initR(*this);
-
         U.reserve(nBoundaries);
         myHydro::initU(*this);
 
-        P.reserve(nZones);
-        myHydro::initP(*this);
+        R.reserve(nBoundaries);
+        Rht.reserve(nBoundaries);
+        myHydro::initR(*this);
 
         V.reserve(nZones);
-        Vprev.reserve(nZones);   // Previous V calculation
+        Vprev.reserve(nZones);
         Vht.reserve(nZones);
         myHydro::initV(*this);
-
-        T.reserve(nZones);
-        Tht.reserve(nZones);
-        myHydro::initT(*this);
 
         // Should not change in Lagrangian frame
         DM.reserve(nZones);
@@ -59,6 +53,15 @@ namespace myHydro {
         Q.reserve(nZones);
         myHydro::calcQ(*this);
 
+        ET.reserve(nZones);
+        EV.reserve(nZones);
+
+        T.reserve(nZones);
+        Tht.reserve(nZones);
+        myHydro::initT(*this);
+
+        P.reserve(nZones);
+        myHydro::initP(*this);
     }
 
     void Hydro::iterate() {
@@ -73,9 +76,9 @@ namespace myHydro {
         myHydro::calcET(*this);
         myHydro::calcEV(*this);
 
-        myHydro::calcAK(*this);
-        myHydro::calcAL(*this);
-        myHydro::calcSdot(*this);
+        // myHydro::calcAK(*this);
+        // myHydro::calcAL(*this);
+        // myHydro::calcSdot(*this);
 
         myHydro::calcT(*this);
         myHydro::calcP(*this);

@@ -26,18 +26,18 @@ namespace myHydro {
         }
     }
 
-    void initP(myHydro::Hydro &hydro) {
-
-    }
-
     void initV(myHydro::Hydro &hydro) {
-
+        // initial (1 / density) profile
     }
 
     void initT(myHydro::Hydro &hydro) {
-        // stuff here
+        // initial temperature profile
 
         hydro.Tht = hydro.T;
+    }
+
+    void initP(myHydro::Hydro &hydro) {
+        // intitial pressure profile
     }
 
 }

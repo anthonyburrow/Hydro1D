@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Math constants
 const double zero = 1e-70;
 const double pi4 = 4 * M_PI;
 const double pi4_sq = pi4 * pi4;
@@ -15,10 +16,12 @@ const double one_third = 1 / 3;
 
 // Newton gravitation constant
 const double G = 132709742648;   // km^3 Msol^-1 s^-2
+
 // Radiation constant
-const double a = 7.5657e-15;   // erg cm^-3 K^-4
+// const double a = 7.5657e-15;   // erg cm^-3 K^-4
+
 // Speed of light
-const double c = 2.99792458e10;   // cm s^-1
+// const double c = 2.99792458e10;   // cm s^-1
 
 namespace myHydro {
 
@@ -126,6 +129,52 @@ namespace myHydro {
         // EVht as a function of Tht, Vht
     }
 
+    void calcT(myHydro::Hydro &hydro) {
+        double prevT;
+
+        for (int i = 0; i < hydro.nZones; i++) {
+            // Calc T
+            prevT = hydro.T[i];
+
+            hydro.T[i] = hydro.T[i] + (
+                             // Radiation terms
+                            //  hydro.dt * (
+                            //      hydro.sdot[i] -
+                            //      (hydro.AL[i + 1] - hydro.AL[i]) / hydro.DM[i]
+                            //  )
+                             // Hydro terms
+                             -(hydro.V[i] - hydro.Vprev[i]) * (
+                                 hydro.P[i] + hydro.Q[i] + hydro.EV[i]
+                             )
+                         ) / hydro.ET[i];
+
+            // Calc Tht
+            hydro.Tht[i] = 1.5 * hydro.T[i] - 0.5 * prevT;
+        }
+    }
+
+    void calcP(myHydro::Hydro &hydro) {
+        // P as a function of T, V
+    }
+
+    void calcDt(myHydro::Hydro &hydro) {
+        // Update dt for stability
+        double newDtht = zero;
+        double tmpDt;
+
+        for (int i = 0; i < hydro.nZones; i++) {
+            tmpDt = 0.02 * hydro.V[i] * hydro.dtht /
+                        abs(hydro.V[i] - hydro.Vprev[i]);
+            
+            if (i = 0 || tmpDt < newDtht) { newDtht = tmpDt; }
+        }
+
+        hydro.dt = 0.5 * (hydro.dtht + newDtht);
+        hydro.dthtPrev = hydro.dtht;
+        hydro.dtht = newDtht;
+    }
+
+/*  Radiation
     void calcAK(myHydro::Hydro &hydro) {
         // AK as a function of Tht, Vht
     }
@@ -156,51 +205,6 @@ namespace myHydro {
     void calcSdot(myHydro::Hydro &hydro) {
         // Not sure
     }
-
-    void calcT(myHydro::Hydro &hydro) {
-        double prevT;
-
-        for (int i = 0; i < hydro.nZones; i++) {
-            // Calc T
-            prevT = hydro.T[i];
-
-            hydro.T[i] = hydro.T[i] + (
-                             // Radiation terms
-                             hydro.dt * (
-                                 hydro.sdot[i] -
-                                 (hydro.AL[i + 1] - hydro.AL[i]) / hydro.DM[i]
-                             ) -
-                             // Hydro terms
-                             (hydro.V[i] - hydro.Vprev[i]) * (
-                                 hydro.P[i] + hydro.Q[i] + hydro.EV[i]
-                             )
-                         ) / hydro.ET[i];
-
-            // Calc Tht
-            // When dt is not constant, this equation needs
-            // to be slightly different
-            hydro.Tht[i] = 1.5 * hydro.T[i] - 0.5 * prevT;
-        }
-    }
-
-    void calcP(myHydro::Hydro &hydro) {
-        // P as a function of T, V
-    }
-
-    void calcDt(myHydro::Hydro &hydro) {
-        // Update dt for stability
-        double newDtht = zero;
-        double tmpDt;
-
-        for (int i = 0; i < hydro.nZones; i++) {
-            tmpDt = 0.02 * hydro.V[i] * hydro.dtht /
-                        abs(hydro.V[i] - hydro.Vprev[i]);
-            
-            if (i = 0 || tmpDt < newDtht) { newDtht = tmpDt; }
-        }
-
-        hydro.dt = 0.5 * (hydro.dtht + newDtht);
-        hydro.dtht = newDtht;
-    }
+*/
 
 }
