@@ -5,10 +5,10 @@
 
 // Math constants
 const double zero = 1e-70;
-const double pi4 = 4 * M_PI;
+const double pi4 = 4.0 * M_PI;
 const double pi4_sq = pi4 * pi4;
-const double pi4_3 = pi4 / 3;
-const double one_third = 1 / 3;
+const double pi4_3 = pi4 / 3.0;
+const double one_third = 1.0 / 3.0;
 
 // Newton gravitation constant
 const double G = 6.6743e-8;   // cm^3 g^-1 s^-2

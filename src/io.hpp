@@ -14,5 +14,5 @@ namespace myHydro
         double initDt;
     };
 
-    hydroParams readParams(const std::string &filename);
+    hydroParams readParams();
 }

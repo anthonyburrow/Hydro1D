@@ -10,12 +10,13 @@ namespace myHydro
     class Hydro
     {
     public:
-        const int &nZones;
-        const int nBoundaries;
-        int iter;
-        const int &nIter;
-        const double &initRMax;
+        // can't make these const references for an annoying reason :(
+        int nZones;
+        int nBoundaries;
+        int nIter;
+        double initRMax;
 
+        int iter;
         double dt;
         double dtht;
         double dthtPrev;   // Previous dt calculation
@@ -46,13 +47,11 @@ namespace myHydro
         // std::vector<double> AL;
         // std::vector<double> sdot;
 
-        Hydro(const string &paramFile);
+        Hydro(const myHydro::hydroParams &params);
 
         void iterate();
 
     private:
-        const myHydro::hydroParams &params;
-
         void initVectors();
     };
 }

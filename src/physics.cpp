@@ -1,5 +1,9 @@
 #include <vector>
 #include <cmath>
+#include <iostream>
+
+#include <iomanip>
+
 
 #include "Hydro.hpp"
 #include "constants.hpp"
@@ -37,7 +41,7 @@ namespace myHydro
     {
         hydro.XM[0] = zero;   // BC
 
-        for (int i = 1; i < hydro.nBoundaries; i++)
+        for (int i = 0; i < hydro.nZones; i++)
         {
             hydro.XM[i + 1] = hydro.XM[i] + hydro.DM[i];
         }
@@ -49,7 +53,7 @@ namespace myHydro
 
         for (int i = 1; i < hydro.nBoundaries; i++)
         {
-            newR = hydro.R[i] + hydro.U[i] * hydro.dt;
+            newR = hydro.R[i] + hydro.U[i] * hydro.dtht;
 
             hydro.Rht[i] = 0.5 * (hydro.R[i] + newR);
 
@@ -70,8 +74,8 @@ namespace myHydro
             dP = hydro.P[i] - hydro.P[i - 1];   // P at each boundary
             dQ = hydro.Q[i] - hydro.Q[i - 1];   // Q at each boundary
 
-            hydro.U[i] = hydro.U[i] +
-                         hydro.dt * (pi4_sq * R_sq * (dP + dQ) / hydro.DMb[i] -
+            hydro.U[i] = hydro.U[i] -
+                         hydro.dt * (pi4_sq * R_sq * (dP + dQ) / hydro.DMb[i] +
                                      G * hydro.XM[i] / R_sq);
         }
 
@@ -184,12 +188,13 @@ namespace myHydro
             tmpDt = 0.02 * hydro.V[i] * hydro.dtht /
                         abs(hydro.V[i] - hydro.Vprev[i]);
             
-            if (i = 0 || tmpDt < newDtht) { newDtht = tmpDt; }
+            if (i == 0 || tmpDt < newDtht) { newDtht = tmpDt; }
         }
 
         hydro.dt = 0.5 * (hydro.dtht + newDtht);
         hydro.dthtPrev = hydro.dtht;
         hydro.dtht = newDtht;
+        cout << "new dt: " << hydro.dt << "   " << hydro.dtht << endl;
     }
 
 /*  Radiation

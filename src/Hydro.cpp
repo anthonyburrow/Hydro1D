@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 
 #include "Hydro.hpp"
@@ -10,59 +11,49 @@ using namespace std;
 
 namespace myHydro
 {
-    Hydro::Hydro(const string &paramFile)
-      : params(myHydro::readParams(paramFile)),
-        nZones(params.nZones),
-        nBoundaries(nZones + 1),
-        nIter(params.nIter),
-        initRMax(params.initRMax)
+    Hydro::Hydro(const myHydro::hydroParams &params)
+      : U(params.nZones + 1),
+        R(params.nZones + 1),
+        Rht(params.nZones + 1),
+        V(params.nZones),
+        Vprev(params.nZones),
+        Vht(params.nZones),
+        DM(params.nZones),
+        DMb(params.nZones + 1),
+        XM(params.nZones + 1),
+        Q(params.nZones),
+        Pht(params.nZones),
+        Tht(params.nZones),
+        ET(params.nZones),
+        EV(params.nZones),
+        T(params.nZones),
+        P(params.nZones)
     {
-        iter = 0;
+        nZones = params.nZones;        
+        nBoundaries = nZones + 1;        
+        nIter = params.nIter;        
+        initRMax = params.initRMax;        
 
         dt = params.initDt;
         dtht = params.initDt;   // half-time time interval
+
+        iter = 0;
 
         initVectors();
     }
 
     void Hydro::initVectors()
     {
-        U.reserve(nBoundaries);
         myHydro::initU(*this);
-
-        R.reserve(nBoundaries);
-        Rht.reserve(nBoundaries);
         myHydro::initR(*this);
-
-        V.reserve(nZones);
-        Vprev.reserve(nZones);
-        Vht.reserve(nZones);
         myHydro::initV(*this);
 
-        // Should not change in Lagrangian frame
-        DM.reserve(nZones);
         myHydro::calcDM(*this);
-
-        // Should not change in Lagrangian frame
-        DMb.reserve(nBoundaries);
         myHydro::calcDMb(*this);
-
-        // Should not change in Lagrangian frame
-        XM.reserve(nBoundaries);
         myHydro::calcXM(*this);
 
-        Q.reserve(nZones);
-        myHydro::calcQ(*this);
-
-        Pht.reserve(nZones);
-        Tht.reserve(nZones);
-        ET.reserve(nZones);
-        EV.reserve(nZones);
-
-        T.reserve(nZones);
+        myHydro::initQ(*this);
         myHydro::initT(*this);
-
-        P.reserve(nZones);
         myHydro::initP(*this);
     }
 

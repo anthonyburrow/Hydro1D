@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS =
+CXXFLAGS = -g
 
 BIN_DIR = ./bin
 SRC_DIR = ./src
@@ -17,9 +17,9 @@ $(MAKE_DIRS):
 
 # Target 1
 NAME = Hydro1D
-TARGET = $(BIN_DIR)/$(NAME1)
-_SRC1 = $(NAME1)
-_SRC2 = Hydro initialize physics constants io
+TARGET = $(BIN_DIR)/$(NAME)
+_SRC1 = $(NAME)
+_SRC2 = Hydro initialize physics io
 SRC = $(_SRC1) $(_SRC2)
 
 _OBJ_LIST = $(addsuffix .o, $(SRC))

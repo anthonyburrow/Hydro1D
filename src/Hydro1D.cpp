@@ -6,15 +6,13 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    string inFilename = "./config/params";
+    myHydro::hydroParams params = myHydro::readParams();
+    myHydro::Hydro hydro(params);
 
-    myHydro::Hydro hydro(inFilename);
-
-    int count = 0;
-    while (count < hydro.nIter)
+    while (hydro.iter < hydro.nIter)
     {
+        cout << "iter " << hydro.iter << endl;
         hydro.iterate();
-        count++;
     }
 
     // write to file

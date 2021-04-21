@@ -9,16 +9,17 @@ using namespace std;
 
 namespace myHydro
 {
-    myHydro::hydroParams readParams(const string &filename)
+    myHydro::hydroParams readParams()
     {
+        string filename = "./config/params";
         cout << "Reading from parameter file: " << filename << endl;
 
-        ifstream param_file(filename);
+        ifstream paramFile(filename);
         string line;
         myHydro::hydroParams params;
 
         int count = 0;
-        while (getline(param_file, line))
+        while (getline(paramFile, line))
         {
             if (line[0] == '#' || line[0] == '\0') { continue; }
 
@@ -56,7 +57,7 @@ namespace myHydro
 
             count++;
         }
-        param_file.close();
+        paramFile.close();
 
         return params;
     }
