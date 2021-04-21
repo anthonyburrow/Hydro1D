@@ -118,16 +118,28 @@ namespace myHydro
     void calcPht(myHydro::Hydro &hydro)
     {
         // Pht as a function of Tht, Vht
+        for (int i = 0; i < hydro.nZones; i++)
+        {
+            hydro.Pht[i] = zero;
+        }
     }
 
     void calcET(myHydro::Hydro &hydro)
     {
         // ETht as a function of Tht, Vht
+        for (int i = 0; i < hydro.nZones; i++)
+        {
+            hydro.ET[i] = zero;
+        }
     }
 
     void calcEV(myHydro::Hydro &hydro)
     {
         // EVht as a function of Tht, Vht
+        for (int i = 0; i < hydro.nZones; i++)
+        {
+            hydro.EV[i] = zero;
+        }
     }
 
     void calcT(myHydro::Hydro &hydro)

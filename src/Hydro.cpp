@@ -54,11 +54,12 @@ namespace myHydro
         Q.reserve(nZones);
         myHydro::calcQ(*this);
 
+        Pht.reserve(nZones);
+        Tht.reserve(nZones);
         ET.reserve(nZones);
         EV.reserve(nZones);
 
         T.reserve(nZones);
-        Tht.reserve(nZones);
         myHydro::initT(*this);
 
         P.reserve(nZones);

@@ -3,3 +3,9 @@
 
 #  Initial radius of star (cm)
 1e10
+
+# Number of iterations
+20
+
+# Initial time interval (sec)
+1

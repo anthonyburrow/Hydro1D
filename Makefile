@@ -4,29 +4,46 @@ CXXFLAGS =
 BIN_DIR = ./bin
 SRC_DIR = ./src
 
-NAME = Hydro1D
-TARGET = $(BIN_DIR)/$(NAME)
+# Directories
+MAKE_DIRS = $(BIN_DIR) ./output ./doc/figs
+MKDIR_P = mkdir -p
 
-SRC = $(NAME) Hydro initialize physics io
-SRC_LIST = $(addprefix $(SRC_DIR)/, $(SRC))
+.PHONY: directories $(MAKE_DIRS)
+
+directories: $(MAKE_DIRS)
+
+$(MAKE_DIRS):
+	$(MKDIR_P) $@
+
+# Target 1
+NAME = Hydro1D
+TARGET = $(BIN_DIR)/$(NAME1)
+_SRC1 = $(NAME1)
+_SRC2 = Hydro initialize physics constants io
+SRC = $(_SRC1) $(_SRC2)
 
 _OBJ_LIST = $(addsuffix .o, $(SRC))
 OBJ_LIST = $(addprefix $(BIN_DIR)/, $(_OBJ_LIST))
 
-# Create executable from objects
 $(TARGET): $(OBJ_LIST)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Because "main" cpp does not have a header file
-$(TARGET).o: $(SRC_DIR)/$(NAME).cpp
-	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# Compile all other objects objects
+# Object recipes
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-all: $(TARGET)
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(DIR_GUARD)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/%.h
+	$(CC) $(CCFLAGS) -c $< -o $@
+
+all: directories $(TARGET)
+
+TESTS = $(TARGET)
+
+test: directories $(TESTS)
 
 clean:
-	$(RM) $(BIN_DIR)/*.o $(TARGET)
+	$(RM) -r $(BIN_DIR)

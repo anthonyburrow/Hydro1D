@@ -24,7 +24,7 @@ namespace myHydro
     {
         hydro.U[0] = 0;   // BC
 
-        // Start with zero velocities
+        // Start from rest
         for (int i = 1; i < hydro.nBoundaries; i++)
         {
             hydro.U[i] = 0;
@@ -34,13 +34,27 @@ namespace myHydro
     void initV(myHydro::Hydro &hydro)
     {
         // initial (1 / density) profile
+        const double rhoc = 2e-14;   // Central density
+        double rho;
+
+        hydro.V[0] = 1 / rhoc;
+
+        for (int i = 1; i < hydro.nZones; i++)
+        {
+            rho = rhoc * (1 - sqrt(hydro.R[i] / hydro.initRMax));
+            hydro.V[i] = 1 / rho;
+        }
     }
 
     void initT(myHydro::Hydro &hydro)
     {
         // initial temperature profile
+        for (int i = 0; i < hydro.nZones; i++)
+        {
+            hydro.T[i] = zero;
+        }
 
-        hydro.Tht = hydro.T;
+        hydro.Tht = hydro.T;   // Initial assumption
     }
 
     void initP(myHydro::Hydro &hydro)

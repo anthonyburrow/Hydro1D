@@ -17,5 +17,9 @@ int main(int argc, char* argv[])
         count++;
     }
 
+    // write to file
+
+    cout << "Complete." << endl;
+
     return 0;
 }

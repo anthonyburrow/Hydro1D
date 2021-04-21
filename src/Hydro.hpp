@@ -35,10 +35,11 @@ namespace myHydro
         std::vector<double> Vht;
 
         std::vector<double> Q;
+        std::vector<double> Tht;
+        std::vector<double> Pht;
         std::vector<double> ET;
         std::vector<double> EV;
         std::vector<double> T;
-        std::vector<double> Tht;
         std::vector<double> P;
 
         // std::vector<double> AK;
