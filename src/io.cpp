@@ -2,8 +2,11 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <limits>
+#include <iomanip>
 
 #include "io.hpp"
+#include "Hydro.hpp"
 
 using namespace std;
 
@@ -60,5 +63,38 @@ namespace myHydro
         paramFile.close();
 
         return params;
+    }
+
+    void setOutputPrecision(myHydro::Hydro &hydro)
+    {
+        const int n_digits = numeric_limits<double>::max_digits10;
+
+        hydro.fileR << setprecision(n_digits);
+        hydro.fileU << setprecision(n_digits);
+        hydro.fileV << setprecision(n_digits);
+        hydro.fileT << setprecision(n_digits);
+        hydro.fileP << setprecision(n_digits);
+    }
+
+    void writeOutput(myHydro::Hydro &hydro)
+    {
+        for (int i = 0; i < hydro.nBoundaries; i++)
+        {
+            hydro.fileR << hydro.R[i] << " ";
+            hydro.fileU << hydro.U[i] << " ";
+        }
+
+        for (int i = 0; i < hydro.nZones; i++)
+        {
+            hydro.fileV << hydro.V[i] << " ";
+            hydro.fileT << hydro.T[i] << " ";
+            hydro.fileP << hydro.P[i] << " ";
+        }
+
+        hydro.fileR << endl;
+        hydro.fileU << endl;
+        hydro.fileV << endl;
+        hydro.fileT << endl;
+        hydro.fileP << endl;
     }
 }

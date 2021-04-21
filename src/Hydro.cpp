@@ -12,7 +12,8 @@ using namespace std;
 namespace myHydro
 {
     Hydro::Hydro(const myHydro::hydroParams &params)
-      : U(params.nZones + 1),
+      : // Allocate vectors
+        U(params.nZones + 1),
         R(params.nZones + 1),
         Rht(params.nZones + 1),
         V(params.nZones),
@@ -27,8 +28,15 @@ namespace myHydro
         ET(params.nZones),
         EV(params.nZones),
         T(params.nZones),
-        P(params.nZones)
+        P(params.nZones),
+        // Output
+        fileU("./output/U.dat"),
+        fileR("./output/R.dat"),
+        fileV("./output/V.dat"),
+        fileT("./output/T.dat"),
+        fileP("./output/P.dat")
     {
+        // Parameters
         nZones = params.nZones;        
         nBoundaries = nZones + 1;        
         nIter = params.nIter;        
@@ -39,11 +47,16 @@ namespace myHydro
 
         iter = 0;
 
+        // Adjust output
+        myHydro::setOutputPrecision(*this);
+
+        // Setup
         initVectors();
     }
 
     void Hydro::initVectors()
     {
+        cout << "Setting initial conditions..." << endl;
         myHydro::initU(*this);
         myHydro::initR(*this);
         myHydro::initV(*this);
@@ -78,5 +91,10 @@ namespace myHydro
         myHydro::calcDt(*this);
 
         iter++;
+    }
+
+    void Hydro::write()
+    {
+        myHydro::writeOutput(*this);
     }
 }
