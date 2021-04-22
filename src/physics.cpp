@@ -4,7 +4,6 @@
 
 #include <iomanip>
 
-
 #include "Hydro.hpp"
 #include "constants.hpp"
 
@@ -14,13 +13,13 @@ namespace myHydro
 {
     void calcDM(myHydro::Hydro &hydro)
     {
-        double RCube = zero;
+        double RCube = myHydro::zero;
         double nextRCube;
 
         for (int i = 0; i < hydro.nBoundaries; i++)
         {
             nextRCube = pow(hydro.R[i + 1], 3);
-            hydro.DM[i] = pi4_3 * (nextRCube - RCube) / hydro.V[i];
+            hydro.DM[i] = myHydro::pi4_3 * (nextRCube - RCube) / hydro.V[i];
             RCube = nextRCube;
         }
     }
@@ -39,7 +38,7 @@ namespace myHydro
 
     void calcXM(myHydro::Hydro &hydro)
     {
-        hydro.XM[0] = zero;   // BC
+        hydro.XM[0] = myHydro::zero;   // BC
 
         for (int i = 0; i < hydro.nZones; i++)
         {
@@ -75,19 +74,20 @@ namespace myHydro
             dQ = hydro.Q[i] - hydro.Q[i - 1];   // Q at each boundary
 
             hydro.U[i] = hydro.U[i] -
-                         hydro.dt * (pi4_sq * R_sq * (dP + dQ) / hydro.DMb[i] +
-                                     G * hydro.XM[i] / R_sq);
+                         hydro.dt *
+                             (myHydro::pi4_sq * R_sq * (dP + dQ) / hydro.DMb[i]
+                             + myHydro::G * hydro.XM[i] / R_sq);
         }
 
         // Outer boundary with dP = dQ = 0
         R_sq = pow(hydro.R[nZones], 2);
         hydro.U[nZones] = hydro.U[nZones] -
-                          hydro.dt * G * hydro.XM[nZones] / R_sq;
+                          hydro.dt * myHydro::G * hydro.XM[nZones] / R_sq;
     }
 
     void calcV(myHydro::Hydro &hydro)
     {
-        double RCube = zero;
+        double RCube = myHydro::zero;
         double nextRCube;
 
         for (int i = 0; i < hydro.nZones; i++)
@@ -95,7 +95,7 @@ namespace myHydro
             hydro.Vprev[i] = hydro.V[i];
 
             nextRCube = pow(hydro.R[i + 1], 3);
-            hydro.V[i] = pi4_3 * (nextRCube - RCube) / hydro.DM[i];
+            hydro.V[i] = myHydro::pi4_3 * (nextRCube - RCube) / hydro.DM[i];
             RCube = nextRCube;
 
             hydro.Vht[i] = 0.5 * (hydro.V[i] + hydro.Vprev[i]);
@@ -124,7 +124,7 @@ namespace myHydro
         // Pht as a function of Tht, Vht
         for (int i = 0; i < hydro.nZones; i++)
         {
-            hydro.Pht[i] = zero;
+            hydro.Pht[i] = myHydro::zero;
         }
     }
 
@@ -133,7 +133,7 @@ namespace myHydro
         // ETht as a function of Tht, Vht
         for (int i = 0; i < hydro.nZones; i++)
         {
-            hydro.ET[i] = zero;
+            hydro.ET[i] = myHydro::zero;
         }
     }
 
@@ -142,7 +142,7 @@ namespace myHydro
         // EVht as a function of Tht, Vht
         for (int i = 0; i < hydro.nZones; i++)
         {
-            hydro.EV[i] = zero;
+            hydro.EV[i] = myHydro::zero;
         }
     }
 
@@ -180,7 +180,7 @@ namespace myHydro
     void calcDt(myHydro::Hydro &hydro)
     {
         // Update dt for stability
-        double newDtht = zero;
+        double newDtht = myHydro::zero;
         double tmpDt;
 
         for (int i = 0; i < hydro.nZones; i++)
@@ -210,15 +210,16 @@ namespace myHydro
         double prevDM_AK = hydro.DM[0] * hydro.AK[0];
         double nextDM_AK;
 
-        hydro.AL[0] = zero;   // BC
+        hydro.AL[0] = myHydro::zero;   // BC
 
         for (int i = 1; i < hydro.nZones; i++)
         {
             nextT4 = pow(hydro.Tht[i], 4);
             nextDM_AK = hydro.DM[i] * hydro.AK[i];
 
-            hydro.AL[i] = pi4_sq * a * c * one_third * pow(hydro.Rht[i], 4) *
-                          2 * (nextT4 - prevT4) / (nextDM_AK + prevDM_AK);
+            hydro.AL[i] = myHydro::pi4_sq * a * c * myHydro::one_third *
+                              pow(hydro.Rht[i], 4) * 2 * (nextT4 - prevT4) /
+                              (nextDM_AK + prevDM_AK);
             
             prevT4 = nextT4;
             prevDM_AK = nextDM_AK;
