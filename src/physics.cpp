@@ -194,7 +194,7 @@ namespace myHydro
         hydro.dt = 0.5 * (hydro.dtht + newDtht);
         hydro.dthtPrev = hydro.dtht;
         hydro.dtht = newDtht;
-        cout << "new dt: " << hydro.dt << "   " << hydro.dtht << endl;
+        // cout << "new dt: " << hydro.dt << "   " << hydro.dtht << endl;
     }
 
 /*  Radiation

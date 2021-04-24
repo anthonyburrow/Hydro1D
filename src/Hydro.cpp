@@ -30,6 +30,7 @@ namespace myHydro
         T(params.nZones),
         P(params.nZones),
         // Output
+        filedt("./output/dt.dat"),
         fileU("./output/U.dat"),
         fileR("./output/R.dat"),
         fileV("./output/V.dat"),

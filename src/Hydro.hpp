@@ -48,6 +48,7 @@ namespace myHydro
         // std::vector<double> AL;
         // std::vector<double> sdot;
 
+        std::ofstream filedt;
         std::ofstream fileU;
         std::ofstream fileR;
         std::ofstream fileV;

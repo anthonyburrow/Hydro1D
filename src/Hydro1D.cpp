@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 
     while (hydro.iter < hydro.nIter)
     {
-        cout << "iter " << hydro.iter << endl;
+        // cout << "iter " << hydro.iter << endl;
         hydro.iterate();
         hydro.write();
     }
