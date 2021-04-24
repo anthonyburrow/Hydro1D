@@ -68,7 +68,7 @@ namespace myHydro
 
         myHydro::initQ(*this);
         myHydro::initT(*this);
-        myHydro::initP(*this);
+        myHydro::calcP(*this);
     }
 
     void Hydro::iterate()

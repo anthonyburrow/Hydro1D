@@ -121,10 +121,9 @@ namespace myHydro
 
     void calcPht(myHydro::Hydro &hydro)
     {
-        // Pht as a function of Tht, Vht
         for (int i = 0; i < hydro.nZones; i++)
         {
-            hydro.Pht[i] = myHydro::zero;
+            equationOfState(hydro.Pht[i], hydro.Tht[i], hydro.Vht[i]);
         }
     }
 
@@ -174,7 +173,15 @@ namespace myHydro
 
     void calcP(myHydro::Hydro &hydro)
     {
-        // P as a function of T, V
+        for (int i = 0; i < hydro.nZones; i++)
+        {
+            equationOfState(hydro.P[i], hydro.T[i], hydro.V[i]);
+        }
+    }
+
+    void equationOfState(double &P, const double &T, const double &V)
+    {
+        P = myHydro::zero;   // free fall (P = 0)
     }
 
     void calcDt(myHydro::Hydro &hydro)

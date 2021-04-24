@@ -13,5 +13,5 @@ namespace myHydro
 
     void initV(myHydro::Hydro &hydro);
     void initT(myHydro::Hydro &hydro);
-    void initP(myHydro::Hydro &hydro);
+    // void initP(myHydro::Hydro &hydro);
 }
