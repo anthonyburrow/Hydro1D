@@ -16,6 +16,7 @@ namespace myHydro
         int nBoundaries;
         int nIter;
         double initRMax;
+        bool freeFall;
 
         int iter;
         double dt;

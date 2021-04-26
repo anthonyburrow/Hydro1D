@@ -9,3 +9,6 @@
 
 # Initial time interval (sec)
 1
+
+# System in free-fall (1 = true, 0 = false)
+0

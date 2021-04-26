@@ -54,6 +54,12 @@ namespace myHydro
                     params.initDt = initDt;
                     cout << "  Initial dt: " << initDt << endl;
                     break;
+                case 4 :
+                    bool freeFall;
+                    iss >> freeFall;
+                    params.freeFall = freeFall;
+                    cout << "  System in free-fall: " << freeFall << endl;
+                    break;
                 default :
                     cout << "Too many lines in param file" << endl;
             }

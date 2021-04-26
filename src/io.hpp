@@ -14,6 +14,7 @@ namespace myHydro
         double initRMax;
         double nIter;
         double initDt;
+        bool freeFall;
     };
 
     hydroParams readParams();

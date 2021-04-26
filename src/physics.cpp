@@ -112,7 +112,7 @@ namespace myHydro
 
             if (hydro.V[i] < hydro.Vprev[i] && dU < 0)
             {
-                hydro.Q[i] = 2 * pow(dU, 2) / hydro.Vht[i];
+                hydro.Q[i] = 2.0 * pow(dU, 2) / hydro.Vht[i];
             }
             else { hydro.Q[i] = 0; }
  
@@ -123,7 +123,14 @@ namespace myHydro
     {
         for (int i = 0; i < hydro.nZones; i++)
         {
-            equationOfState(hydro.Pht[i], hydro.Tht[i], hydro.Vht[i]);
+            if (hydro.freeFall)
+            {
+                hydro.Pht[i] = myHydro::zero;
+            }
+            else
+            {
+                polytropicEoS(hydro.Pht[i], hydro.Tht[i], hydro.Vht[i]);
+            }
         }
     }
 
@@ -175,13 +182,32 @@ namespace myHydro
     {
         for (int i = 0; i < hydro.nZones; i++)
         {
-            equationOfState(hydro.P[i], hydro.T[i], hydro.V[i]);
+            if (hydro.freeFall)
+            {
+                hydro.P[i] = myHydro::zero;
+            }
+            else
+            {
+                polytropicEoS(hydro.P[i], hydro.T[i], hydro.V[i]);
+            }
+            
         }
     }
 
-    void equationOfState(double &P, const double &T, const double &V)
+    void polytropicEoS(double &P, const double &T, const double &V)
     {
-        P = myHydro::zero;   // free fall (P = 0)
+        const double rho = 1 / V;
+
+        if (rho < myHydro::rhoNuc)
+        {
+            // Assume gamma = 4/3 for relativistic fermions
+            P = myHydro::K4_3 * pow(rho, myHydro::four_thirds);
+        }
+        else
+        {
+            // Assume "stiff" gamma = 3 for degeneracy
+            P = myHydro::K3 * pow(rho, 3);
+        }
     }
 
     void calcDt(myHydro::Hydro &hydro)

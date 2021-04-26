@@ -42,6 +42,7 @@ namespace myHydro
         nBoundaries = nZones + 1;        
         nIter = params.nIter;        
         initRMax = params.initRMax;        
+        freeFall = params.freeFall;        
 
         dt = params.initDt;
         dtht = params.initDt;   // half-time time interval
