@@ -6,6 +6,7 @@
 #include "io.hpp"
 #include "initialize.hpp"
 #include "physics.hpp"
+#include "constants.hpp"
 
 using namespace std;
 
@@ -44,10 +45,12 @@ namespace myHydro
         initRMax = params.initRMax;        
         freeFall = params.freeFall;        
 
+        iter = 0;
+
         dt = params.initDt;
         dtht = params.initDt;   // half-time time interval
 
-        iter = 0;
+        K3 = myHydro::zero;
 
         // Adjust output
         myHydro::setOutputPrecision(*this);

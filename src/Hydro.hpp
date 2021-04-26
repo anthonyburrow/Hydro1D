@@ -22,6 +22,8 @@ namespace myHydro
         double dt;
         double dtht;
         double dthtPrev;   // Previous dt calculation
+        
+        double K3;
 
         // Physical quantities
         //   b -> boundary alternative

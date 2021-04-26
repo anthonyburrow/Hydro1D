@@ -17,13 +17,14 @@ namespace myHydro
     static const double G = 6.6743e-8;   // cm^3 g^-1 s^-2
 
     // Polytropic (gamma = 4/3) pressure constant
-    static const double K4_3 = zero;   //change
+    static const double K4_3 = 3.8468e14;   // cgs
 
     // Polytropic (gamma = 3) pressure constant
-    static const double K3 = zero;   //change
+    // static const double K3 = zero;   //change
 
     // Central density (linear, M = 10 Msol, R = 10^10 cm)
-    static const double rhoc = 10.0 * 1.989 * 1000.0 / (pi4 * (one_third - 0.25));
+    // static const double rhoc = 10.0 * 1.989 * 1000.0 / (pi4 * (one_third - 0.25));
+    static const double rhoc = 2e10;
 
     // Nuclear density
     static const double rhoNuc = 2.3e14;

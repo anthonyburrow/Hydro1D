@@ -5,6 +5,7 @@
 #include <iomanip>
 
 #include "Hydro.hpp"
+#include "physics.hpp"
 #include "constants.hpp"
 
 using namespace std;
@@ -44,6 +45,7 @@ namespace myHydro
         {
             hydro.XM[i + 1] = hydro.XM[i] + hydro.DM[i];
         }
+        // cout << hydro.XM[hydro.nZones] / 1.989e33 << " m_sol" << endl;
     }
 
     void calcR(myHydro::Hydro &hydro)
@@ -66,7 +68,7 @@ namespace myHydro
         double dP;
         double dQ;
         const int &nZones = hydro.nZones;
-        
+
         for (int i = 1; i < nZones; i++)
         {
             R_sq = pow(hydro.R[i], 2);
@@ -114,7 +116,7 @@ namespace myHydro
             {
                 hydro.Q[i] = 2.0 * pow(dU, 2) / hydro.Vht[i];
             }
-            else { hydro.Q[i] = 0; }
+            else { hydro.Q[i] = myHydro::zero; }
  
         }
     }
@@ -129,7 +131,8 @@ namespace myHydro
             }
             else
             {
-                polytropicEoS(hydro.Pht[i], hydro.Tht[i], hydro.Vht[i]);
+                polytropicEoS(hydro.Pht[i], hydro.Tht[i], hydro.Vht[i],
+                              hydro.K3);
             }
         }
     }
@@ -158,20 +161,22 @@ namespace myHydro
 
         for (int i = 0; i < hydro.nZones; i++)
         {
-            // Calc T
+            // // Calc T
             prevT = hydro.T[i];
 
-            hydro.T[i] = hydro.T[i] + (
-                             // Radiation terms
-                            //  hydro.dt * (
-                            //      hydro.sdot[i] -
-                            //      (hydro.AL[i + 1] - hydro.AL[i]) / hydro.DM[i]
-                            //  )
-                             // Hydro terms
-                             -(hydro.V[i] - hydro.Vprev[i]) * (
-                                 hydro.P[i] + hydro.Q[i] + hydro.EV[i]
-                             )
-                         ) / hydro.ET[i];
+            // hydro.T[i] = hydro.T[i] + (
+            //                  // Radiation terms
+            //                 //  hydro.dt * (
+            //                 //      hydro.sdot[i] -
+            //                 //      (hydro.AL[i + 1] - hydro.AL[i]) / hydro.DM[i]
+            //                 //  )
+            //                  // Hydro terms
+            //                  -(hydro.V[i] - hydro.Vprev[i]) * (
+            //                      hydro.P[i] + hydro.Q[i] + hydro.EV[i]
+            //                  )
+            //              ) / hydro.ET[i];
+
+            hydro.T[i] = myHydro::zero;
 
             // Calc Tht
             hydro.Tht[i] = 1.5 * hydro.T[i] - 0.5 * prevT;
@@ -188,13 +193,15 @@ namespace myHydro
             }
             else
             {
-                polytropicEoS(hydro.P[i], hydro.T[i], hydro.V[i]);
+                polytropicEoS(hydro.P[i], hydro.T[i], hydro.V[i],
+                              hydro.K3);
             }
-            
         }
+        cout << hydro.P[10] << "   " << 1 / hydro.V[10] << "   " << hydro.dt << endl;
     }
 
-    void polytropicEoS(double &P, const double &T, const double &V)
+    void polytropicEoS(double &P, const double &T, const double &V,
+                       double &K3)
     {
         const double rho = 1 / V;
 
@@ -206,7 +213,13 @@ namespace myHydro
         else
         {
             // Assume "stiff" gamma = 3 for degeneracy
-            P = myHydro::K3 * pow(rho, 3);
+            if (K3 == myHydro::zero)
+            {
+                // Solve for K (gamma = 3) such that P continuous
+                K3 = P / pow(rho, 3);
+                cout << "rho = " << rho << ", K3 = " << K3;
+            }
+            P = K3 * pow(rho, 3);
         }
     }
 
