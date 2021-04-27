@@ -5,7 +5,7 @@
 1e10
 
 # Number of iterations
-1000
+10000
 
 # Initial time interval (sec)
 0.001

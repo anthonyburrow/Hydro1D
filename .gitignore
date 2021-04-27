@@ -1,4 +1,6 @@
 bin/
 output/
 
+doc/figs/*
+
 .vscode

@@ -131,8 +131,7 @@ namespace myHydro
             }
             else
             {
-                polytropicEoS(hydro.Pht[i], hydro.Tht[i], hydro.Vht[i],
-                              hydro.K3);
+                polytropicEoS(hydro.Pht[i], hydro.Tht[i], hydro.Vht[i]);
             }
         }
     }
@@ -193,33 +192,29 @@ namespace myHydro
             }
             else
             {
-                polytropicEoS(hydro.P[i], hydro.T[i], hydro.V[i],
-                              hydro.K3);
+                polytropicEoS(hydro.P[i], hydro.T[i], hydro.V[i]);
             }
         }
-        cout << hydro.P[10] << "   " << 1 / hydro.V[10] << "   " << hydro.dt << endl;
+        // cout << hydro.P[10] << "   " << 1 / hydro.V[10] << "   " << hydro.dt << endl;
     }
 
-    void polytropicEoS(double &P, const double &T, const double &V,
-                       double &K3)
+    void polytropicEoS(double &P, const double &T, const double &V)
     {
         const double rho = 1 / V;
 
+        // Assume star made up of relativistic fermions (gamma = 4/3)
+        const double Pelectron = myHydro::K4_3 * pow(rho, myHydro::four_thirds);
+
         if (rho < myHydro::rhoNuc)
         {
-            // Assume gamma = 4/3 for relativistic fermions
-            P = myHydro::K4_3 * pow(rho, myHydro::four_thirds);
+            // Only electron degeneracy
+            P = Pelectron;
         }
         else
         {
-            // Assume "stiff" gamma = 3 for degeneracy
-            if (K3 == myHydro::zero)
-            {
-                // Solve for K (gamma = 3) such that P continuous
-                K3 = P / pow(rho, 3);
-                cout << "rho = " << rho << ", K3 = " << K3;
-            }
-            P = K3 * pow(rho, 3);
+            // Assume "stiff" gamma = 2 for nuclear degeneracy, plus the
+            //   electron degeneracy term
+            P = Pelectron + myHydro::K2 * pow(rho, 2.0);
         }
     }
 

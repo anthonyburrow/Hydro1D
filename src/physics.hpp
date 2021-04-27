@@ -26,8 +26,7 @@ namespace myHydro
     void calcT(myHydro::Hydro &hydro);
     void calcP(myHydro::Hydro &hydro);
 
-    void polytropicEoS(double &P, const double &T, const double &V,
-                       double &K3);
+    void polytropicEoS(double &P, const double &T, const double &V);
 
     void calcDt(myHydro::Hydro &hydro);
 }

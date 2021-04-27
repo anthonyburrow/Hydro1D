@@ -50,8 +50,6 @@ namespace myHydro
         dt = params.initDt;
         dtht = params.initDt;   // half-time time interval
 
-        K3 = myHydro::zero;
-
         // Adjust output
         myHydro::setOutputPrecision(*this);
 
