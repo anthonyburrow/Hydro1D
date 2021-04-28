@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 import os
 plt.switch_backend('agg')
 
@@ -64,15 +65,49 @@ _save_dir = '%s/%s' % (_fig_dir, 'U_R')
 os.makedirs(_save_dir, exist_ok=True)
 
 n_iter = data_R.shape[0]
-for i in range(0, n_iter, int(n_iter / 100)):
-    fig, ax = plt.subplots()
+# for i in range(0, n_iter, int(n_iter / 100)):
+#     fig, ax = plt.subplots()
 
-    ax.plot(data_R[i], data_U[i], 'o-', color='k', markersize=2)
+#     ax.plot(data_R[i], data_U[i], 'o-', color='k', markersize=2)
 
-    ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
-    ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$')
+#     ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
+#     ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$')
 
-    fn = '%s/U_R%.4e.png' % (_save_dir, time[i])
-    fig.savefig(fn)
+#     ax.set_xscale('log')
 
-    plt.close('all')
+#     ax.set_xlim(left=1e-4)
+
+#     fn = '%s/U_R%.4e.png' % (_save_dir, time[i])
+#     fig.savefig(fn)
+
+#     plt.close('all')
+
+
+fig, ax = plt.subplots()
+
+line, = ax.plot([], [], 'o-', color='k', markersize=2)
+
+ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
+ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$')
+
+ax.set_xlim(1e-4, 1e10)
+ax.set_ylim(-5e11, 5e11)
+
+ax.set_xscale('log')
+
+ax.set_xlim(left=1e-4)
+
+def init():
+    line.set_data([], [])
+    return line,
+
+def animate(i):
+    line.set_data(data_R[i], data_U[i])
+    return line,
+
+anim = FuncAnimation(fig, animate, init_func=init,
+                     frames=range(0, n_iter, int(n_iter / 100)),
+                     interval=50, blit=True)
+
+fn = '%s/U_R.gif' % _save_dir
+anim.save(fn, writer='imagemagick')

@@ -30,6 +30,7 @@ namespace myHydro
         EV(params.nZones),
         T(params.nZones),
         P(params.nZones),
+
         // Output
         filedt("./output/dt.dat"),
         fileU("./output/U.dat"),
@@ -39,11 +40,11 @@ namespace myHydro
         fileP("./output/P.dat")
     {
         // Parameters
-        nZones = params.nZones;        
-        nBoundaries = nZones + 1;        
-        nIter = params.nIter;        
-        initRMax = params.initRMax;        
-        freeFall = params.freeFall;        
+        nZones = params.nZones;
+        nBoundaries = nZones + 1;
+        nIter = params.nIter;
+        initRMax = params.initRMax;
+        freeFall = params.freeFall;
 
         iter = 0;
 
