@@ -19,7 +19,7 @@ $(MAKE_DIRS):
 NAME = Hydro1D
 TARGET = $(BIN_DIR)/$(NAME)
 _SRC1 = $(NAME)
-_SRC2 = Hydro initialize physics io
+_SRC2 = Hydro initialize physics constants io
 SRC = $(_SRC1) $(_SRC2)
 
 _OBJ_LIST = $(addsuffix .o, $(SRC))

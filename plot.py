@@ -75,7 +75,7 @@ n_iter = data_R.shape[0]
 
 #     ax.set_xscale('log')
 
-#     ax.set_xlim(left=1e-4)
+#     ax.set_xlim(left=1e5)
 
 #     fn = '%s/U_R%.4e.png' % (_save_dir, time[i])
 #     fig.savefig(fn)
@@ -91,11 +91,11 @@ ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
 ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$')
 
 ax.set_xlim(1e-4, 1e10)
-ax.set_ylim(-5e11, 5e11)
+ax.set_ylim(-5e11, 0)
 
 ax.set_xscale('log')
 
-ax.set_xlim(left=1e-4)
+ax.set_xlim(left=1e6)
 
 def init():
     line.set_data([], [])
@@ -107,7 +107,7 @@ def animate(i):
 
 anim = FuncAnimation(fig, animate, init_func=init,
                      frames=range(0, n_iter, int(n_iter / 100)),
-                     interval=50, blit=True)
+                     interval=75, blit=True)
 
 fn = '%s/U_R.gif' % _save_dir
 anim.save(fn, writer='imagemagick')
