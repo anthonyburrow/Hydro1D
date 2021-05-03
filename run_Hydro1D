@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+echo "Running Hydro1D..."
+./bin/Hydro1D
+echo
+
+echo "Running plotting script..."
+rm -r ./doc/figs/*
+python plot.py
+echo
+
+echo "Complete."

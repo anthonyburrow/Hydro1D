@@ -13,24 +13,27 @@ namespace myHydro
     static const double four_thirds = 4.0 / 3.0;
     static const double pi4_3 = pi4 * one_third;
 
+    // Units
+    static const double msol = 1.989e33;   // Solar mass (g)
+
     // Newton gravitation constant
     static const double G = 6.6743e-8;   // cm^3 g^-1 s^-2
 
-    // Polytropic (gamma = 4/3) pressure constant
-    static const double K4_3 = zero;   //change
-
-    // Polytropic (gamma = 3) pressure constant
-    static const double K3 = zero;   //change
-
-    // Central density (linear, M = 10 Msol, R = 10^10 cm)
-    static const double rhoc = 10.0 * 1.989 * 1000.0 / (pi4 * (one_third - 0.25));
-
     // Nuclear density
-    static const double rhoNuc = 2.3e14;
+    static const double rhoNuc = 2.3e14;   // g cm^-3
 
-    // Radiation constant
-    // static const double a = 7.5657e-15;   // erg cm^-3 K^-4
+    // Polytropic (gamma = 4/3) pressure constant
+    static const double K4_3 = 3.8468e14;   // cgs
 
-    // Speed of light
-    // static const double c = 2.99792458e10;   // cm s^-1
+    // Polytropic (gamma = 2) pressure constant
+    //    Based on Baron, Cooperstein, Kahana 1985 with x = 0.33, gamma = 2
+    //    P = [ K0 / (9 * gamma * rhoNuc * m_n) ] * rho^2
+    const double m_n = 1.674920e-24;   // Mass of neutron (g)
+    const double K0 = 220.0 * 1.60218e-6;   // erg
+
+    static const double K2 = K0 / (18.0 * rhoNuc * m_n);
+
+    // Central density (M = 10 Msol, R = 10^10 cm)
+    static const double rhoc = 2e10;   // g cm^-3
+
 }

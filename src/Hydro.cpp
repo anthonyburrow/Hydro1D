@@ -6,6 +6,7 @@
 #include "io.hpp"
 #include "initialize.hpp"
 #include "physics.hpp"
+#include "constants.hpp"
 
 using namespace std;
 
@@ -29,25 +30,26 @@ namespace myHydro
         EV(params.nZones),
         T(params.nZones),
         P(params.nZones),
+
         // Output
         filedt("./output/dt.dat"),
         fileU("./output/U.dat"),
         fileR("./output/R.dat"),
         fileV("./output/V.dat"),
-        fileT("./output/T.dat"),
+        // fileT("./output/T.dat"),
         fileP("./output/P.dat")
     {
         // Parameters
-        nZones = params.nZones;        
-        nBoundaries = nZones + 1;        
-        nIter = params.nIter;        
-        initRMax = params.initRMax;        
-        freeFall = params.freeFall;        
+        nZones = params.nZones;
+        nBoundaries = nZones + 1;
+        nIter = params.nIter;
+        initRMax = params.initRMax;
+        freeFall = params.freeFall;
+
+        iter = 0;
 
         dt = params.initDt;
         dtht = params.initDt;   // half-time time interval
-
-        iter = 0;
 
         // Adjust output
         myHydro::setOutputPrecision(*this);
@@ -83,11 +85,7 @@ namespace myHydro
         myHydro::calcET(*this);
         myHydro::calcEV(*this);
 
-        // myHydro::calcAK(*this);
-        // myHydro::calcAL(*this);
-        // myHydro::calcSdot(*this);
-
-        myHydro::calcT(*this);
+        // myHydro::calcT(*this);
         myHydro::calcP(*this);
 
         myHydro::calcDt(*this);

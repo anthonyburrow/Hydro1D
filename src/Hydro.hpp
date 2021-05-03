@@ -45,15 +45,10 @@ namespace myHydro
         std::vector<double> T;
         std::vector<double> P;
 
-        // std::vector<double> AK;
-        // std::vector<double> AL;
-        // std::vector<double> sdot;
-
         std::ofstream filedt;
         std::ofstream fileU;
         std::ofstream fileR;
         std::ofstream fileV;
-        std::ofstream fileT;
         std::ofstream fileP;
 
         Hydro(const myHydro::hydroParams &params);

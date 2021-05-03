@@ -5,6 +5,7 @@
 #include <iomanip>
 
 #include "Hydro.hpp"
+#include "physics.hpp"
 #include "constants.hpp"
 
 using namespace std;
@@ -44,6 +45,7 @@ namespace myHydro
         {
             hydro.XM[i + 1] = hydro.XM[i] + hydro.DM[i];
         }
+        // cout << hydro.XM[hydro.nZones] / 1.989e33 << " m_sol" << endl;
     }
 
     void calcR(myHydro::Hydro &hydro)
@@ -66,7 +68,7 @@ namespace myHydro
         double dP;
         double dQ;
         const int &nZones = hydro.nZones;
-        
+
         for (int i = 1; i < nZones; i++)
         {
             R_sq = pow(hydro.R[i], 2);
@@ -114,7 +116,7 @@ namespace myHydro
             {
                 hydro.Q[i] = 2.0 * pow(dU, 2) / hydro.Vht[i];
             }
-            else { hydro.Q[i] = 0; }
+            else { hydro.Q[i] = myHydro::zero; }
  
         }
     }
@@ -158,20 +160,14 @@ namespace myHydro
 
         for (int i = 0; i < hydro.nZones; i++)
         {
-            // Calc T
+            // // Calc T
             prevT = hydro.T[i];
 
-            hydro.T[i] = hydro.T[i] + (
-                             // Radiation terms
-                            //  hydro.dt * (
-                            //      hydro.sdot[i] -
-                            //      (hydro.AL[i + 1] - hydro.AL[i]) / hydro.DM[i]
-                            //  )
-                             // Hydro terms
-                             -(hydro.V[i] - hydro.Vprev[i]) * (
-                                 hydro.P[i] + hydro.Q[i] + hydro.EV[i]
-                             )
-                         ) / hydro.ET[i];
+            hydro.T[i] = hydro.T[i]
+                         // Hydro terms
+                         - (hydro.V[i] - hydro.Vprev[i])
+                               * (hydro.P[i] + hydro.Q[i] + hydro.EV[i])
+                               / hydro.ET[i];
 
             // Calc Tht
             hydro.Tht[i] = 1.5 * hydro.T[i] - 0.5 * prevT;
@@ -190,7 +186,6 @@ namespace myHydro
             {
                 polytropicEoS(hydro.P[i], hydro.T[i], hydro.V[i]);
             }
-            
         }
     }
 
@@ -198,15 +193,19 @@ namespace myHydro
     {
         const double rho = 1 / V;
 
+        // Assume star made up of relativistic fermions (gamma = 4/3)
+        const double Pelectron = myHydro::K4_3 * pow(rho, myHydro::four_thirds);
+
         if (rho < myHydro::rhoNuc)
         {
-            // Assume gamma = 4/3 for relativistic fermions
-            P = myHydro::K4_3 * pow(rho, myHydro::four_thirds);
+            // Only electron degeneracy
+            P = Pelectron;
         }
         else
         {
-            // Assume "stiff" gamma = 3 for degeneracy
-            P = myHydro::K3 * pow(rho, 3);
+            // Assume "stiff" gamma = 2 for nuclear degeneracy, plus the
+            //    electron degeneracy term
+            P = Pelectron + myHydro::K2 * pow(rho, 2.0);
         }
     }
 
@@ -227,44 +226,5 @@ namespace myHydro
         hydro.dt = 0.5 * (hydro.dtht + newDtht);
         hydro.dthtPrev = hydro.dtht;
         hydro.dtht = newDtht;
-        // cout << "new dt: " << hydro.dt << "   " << hydro.dtht << endl;
     }
-
-/*  Radiation
-    void calcAK(myHydro::Hydro &hydro)
-    {
-        // AK as a function of Tht, Vht
-    }
-
-    void calcAL(myHydro::Hydro &hydro)
-    {
-        double prevT4 = pow(hydro.Tht[0], 4);
-        double nextT4;
-        double prevDM_AK = hydro.DM[0] * hydro.AK[0];
-        double nextDM_AK;
-
-        hydro.AL[0] = myHydro::zero;   // BC
-
-        for (int i = 1; i < hydro.nZones; i++)
-        {
-            nextT4 = pow(hydro.Tht[i], 4);
-            nextDM_AK = hydro.DM[i] * hydro.AK[i];
-
-            hydro.AL[i] = myHydro::pi4_sq * a * c * myHydro::one_third *
-                              pow(hydro.Rht[i], 4) * 2 * (nextT4 - prevT4) /
-                              (nextDM_AK + prevDM_AK);
-            
-            prevT4 = nextT4;
-            prevDM_AK = nextDM_AK;
-        }
-
-        // Outer boundary?
-        // hydro.AL[nZones] = 
-    }
-
-    void calcSdot(myHydro::Hydro &hydro)
-    {
-        // Not sure
-    }
-*/
 }

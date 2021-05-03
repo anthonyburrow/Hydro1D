@@ -5,10 +5,10 @@
 1e10
 
 # Number of iterations
-20
+10000
 
 # Initial time interval (sec)
-1
+0.0001
 
 # System in free-fall (1 = true, 0 = false)
 0
