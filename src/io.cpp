@@ -58,7 +58,8 @@ namespace myHydro
                     bool freeFall;
                     iss >> freeFall;
                     params.freeFall = freeFall;
-                    cout << "  System in free-fall: " << freeFall << endl;
+                    cout << "  System in free-fall: ";
+                    cout << boolalpha << freeFall << endl;
                     break;
                 default :
                     cout << "Too many lines in param file" << endl;

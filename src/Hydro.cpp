@@ -85,10 +85,6 @@ namespace myHydro
         myHydro::calcET(*this);
         myHydro::calcEV(*this);
 
-        // myHydro::calcAK(*this);
-        // myHydro::calcAL(*this);
-        // myHydro::calcSdot(*this);
-
         // myHydro::calcT(*this);
         myHydro::calcP(*this);
 

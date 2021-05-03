@@ -19,10 +19,6 @@ namespace myHydro
     void calcET(myHydro::Hydro &hydro);
     void calcEV(myHydro::Hydro &hydro);
 
-    // void calcAK(myHydro::Hydro &hydro);
-    // void calcAL(myHydro::Hydro &hydro);
-    // void calcSdot(myHydro::Hydro &hydro);
-
     void calcT(myHydro::Hydro &hydro);
     void calcP(myHydro::Hydro &hydro);
 

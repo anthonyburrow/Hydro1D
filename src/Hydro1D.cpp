@@ -12,9 +12,9 @@ int main(int argc, char* argv[])
 
     hydro.write();
 
+    cout << "Calculating each iteration..." << endl ;
     while (hydro.iter < hydro.nIter)
     {
-        // cout << "iter " << hydro.iter << endl;
         hydro.iterate();
         hydro.write();
     }

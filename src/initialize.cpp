@@ -67,13 +67,4 @@ namespace myHydro
         hydro.Tht = hydro.T;   // Initial assumption
     }
 
-    // void initP(myHydro::Hydro &hydro)
-    // {
-    //     // intitial pressure profile
-    //     // - zero for free-fall testing
-    //     for (int i = 0; i < hydro.nZones; i++)
-    //     {
-    //         hydro.P[i] = myHydro::zero;
-    //     }
-    // }
 }
