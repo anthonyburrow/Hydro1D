@@ -36,7 +36,7 @@ namespace myHydro
         fileU("./output/U.dat"),
         fileR("./output/R.dat"),
         fileV("./output/V.dat"),
-        fileT("./output/T.dat"),
+        // fileT("./output/T.dat"),
         fileP("./output/P.dat")
     {
         // Parameters
@@ -89,7 +89,7 @@ namespace myHydro
         // myHydro::calcAL(*this);
         // myHydro::calcSdot(*this);
 
-        myHydro::calcT(*this);
+        // myHydro::calcT(*this);
         myHydro::calcP(*this);
 
         myHydro::calcDt(*this);

@@ -97,13 +97,17 @@ ax.set_xscale('log')
 
 ax.set_xlim(left=1e6)
 
+title = ax.set_title('')
+
 def init():
     line.set_data([], [])
-    return line,
+    title.set_text('')
+    return line, title
 
 def animate(i):
     line.set_data(data_R[i], data_U[i])
-    return line,
+    title.set_text('t = %.3e sec' % time[i])
+    return line, title,
 
 anim = FuncAnimation(fig, animate, init_func=init,
                      frames=range(0, n_iter, int(n_iter / 100)),

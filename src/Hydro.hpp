@@ -53,7 +53,7 @@ namespace myHydro
         std::ofstream fileU;
         std::ofstream fileR;
         std::ofstream fileV;
-        std::ofstream fileT;
+        // std::ofstream fileT;
         std::ofstream fileP;
 
         Hydro(const myHydro::hydroParams &params);

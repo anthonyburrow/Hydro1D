@@ -79,7 +79,6 @@ namespace myHydro
         hydro.fileR << setprecision(n_digits);
         hydro.fileU << setprecision(n_digits);
         hydro.fileV << setprecision(n_digits);
-        hydro.fileT << setprecision(n_digits);
         hydro.fileP << setprecision(n_digits);
     }
 
@@ -96,14 +95,12 @@ namespace myHydro
         for (int i = 0; i < hydro.nZones; i++)
         {
             hydro.fileV << hydro.V[i] << " ";
-            hydro.fileT << hydro.T[i] << " ";
             hydro.fileP << hydro.P[i] << " ";
         }
 
         hydro.fileR << endl;
         hydro.fileU << endl;
         hydro.fileV << endl;
-        hydro.fileT << endl;
         hydro.fileP << endl;
     }
 }
