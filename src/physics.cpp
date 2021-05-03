@@ -12,38 +12,13 @@ using namespace std;
 
 namespace myHydro
 {
-    void calcDM(myHydro::Hydro &hydro)
-    {
-        double RCube = myHydro::zero;
-        double nextRCube;
-
-        for (int i = 0; i < hydro.nBoundaries; i++)
-        {
-            nextRCube = pow(hydro.R[i + 1], 3);
-            hydro.DM[i] = myHydro::pi4_3 * (nextRCube - RCube) / hydro.V[i];
-            RCube = nextRCube;
-        }
-    }
-
-    void calcDMb(myHydro::Hydro &hydro)
-    {
-        hydro.DMb[0] = hydro.DM[0];   // BC
-
-        for (int i = 1; i < hydro.nZones; i++)
-        {
-            hydro.DMb[i] = 0.5 * (hydro.DM[i] + hydro.DM[i - 1]);
-        }
-
-        hydro.DMb[hydro.nZones] = hydro.DM[hydro.nZones - 1];
-    }
-
     void calcXM(myHydro::Hydro &hydro)
     {
         hydro.XM[0] = myHydro::zero;   // BC
 
         for (int i = 0; i < hydro.nZones; i++)
         {
-            hydro.XM[i + 1] = hydro.XM[i] + hydro.DM[i];
+            hydro.XM[i + 1] = hydro.XM[i] + hydro.DM;
         }
         // cout << hydro.XM[hydro.nZones] / 1.989e33 << " m_sol" << endl;
     }
@@ -77,7 +52,7 @@ namespace myHydro
 
             hydro.U[i] = hydro.U[i] -
                          hydro.dt *
-                             (myHydro::pi4_sq * R_sq * (dP + dQ) / hydro.DMb[i]
+                             (myHydro::pi4_sq * R_sq * (dP + dQ) / hydro.DM
                              + myHydro::G * hydro.XM[i] / R_sq);
         }
 
@@ -97,7 +72,7 @@ namespace myHydro
             hydro.Vprev[i] = hydro.V[i];
 
             nextRCube = pow(hydro.R[i + 1], 3);
-            hydro.V[i] = myHydro::pi4_3 * (nextRCube - RCube) / hydro.DM[i];
+            hydro.V[i] = myHydro::pi4_3 * (nextRCube - RCube) / hydro.DM;
             RCube = nextRCube;
 
             hydro.Vht[i] = 0.5 * (hydro.V[i] + hydro.Vprev[i]);

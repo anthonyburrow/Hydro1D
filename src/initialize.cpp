@@ -9,16 +9,27 @@ using namespace std;
 
 namespace myHydro
 {
+    void initDM(myHydro::Hydro &hydro)
+    {
+        // Uniform mass per zone
+        hydro.DM = hydro.totalMass / hydro.nZones;
+    }
+
     void initR(myHydro::Hydro &hydro)
     {
-        // Start with uniform spacial boundaries
-        const double dR = hydro.initRMax / hydro.nZones;
+        // Give zones equal mass
+        double prevRCube = myHydro::zero;
+        double newRCube;
 
         hydro.R[0] = myHydro::zero;   // BC
 
-        for (int i = 1; i < hydro.nBoundaries; i++)
+        for (int i = 0; i < hydro.nZones; i++)
         {
-            hydro.R[i] = hydro.R[i - 1] + dR;
+            newRCube = prevRCube + hydro.DM * hydro.V[i] / myHydro::pi4_3;
+
+            hydro.R[i + 1] = cbrt(newRCube);
+
+            prevRCube = newRCube;
         }
     }
 
@@ -47,12 +58,13 @@ namespace myHydro
         // initial (1 / density) profile (needs to integrate to 10 M_sol)
         double rho;
 
-        hydro.V[0] = 1.0 / myHydro::rhoc;
+        // hydro.V[0] = 1.0 / myHydro::rhoc;
 
+        // TODO: Read in density values
         for (int i = 1; i < hydro.nZones; i++)
         {
-            rho = myHydro::rhoc * (1 - sqrt(hydro.R[i] / hydro.initRMax));
-            hydro.V[i] = 1 / rho;
+            rho = myHydro::rhoc * (1 - hydro.R[i] / hydro.initRMax);
+            hydro.V[i] = 1.0 / rho;
         }
     }
 

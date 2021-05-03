@@ -20,8 +20,6 @@ namespace myHydro
         V(params.nZones),
         Vprev(params.nZones),
         Vht(params.nZones),
-        DM(params.nZones),
-        DMb(params.nZones + 1),
         XM(params.nZones + 1),
         Q(params.nZones),
         Pht(params.nZones),
@@ -44,6 +42,7 @@ namespace myHydro
         nBoundaries = nZones + 1;
         nIter = params.nIter;
         initRMax = params.initRMax;
+        totalMass = params.totalMass * myHydro::msol;
         freeFall = params.freeFall;
 
         iter = 0;
@@ -61,12 +60,12 @@ namespace myHydro
     void Hydro::initVectors()
     {
         cout << "Setting initial conditions..." << endl;
-        myHydro::initU(*this);
-        myHydro::initR(*this);
-        myHydro::initV(*this);
+        myHydro::initDM(*this);
 
-        myHydro::calcDM(*this);
-        myHydro::calcDMb(*this);
+        myHydro::initU(*this);
+        myHydro::initV(*this);
+        myHydro::initR(*this);
+
         myHydro::calcXM(*this);
 
         myHydro::initQ(*this);

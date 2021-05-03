@@ -16,6 +16,7 @@ namespace myHydro
         int nBoundaries;
         int nIter;
         double initRMax;
+        double totalMass;
         bool freeFall;
 
         int iter;
@@ -26,8 +27,7 @@ namespace myHydro
         // Physical quantities
         //   b -> boundary alternative
         //   ht -> half-time alternative
-        std::vector<double> DM;
-        std::vector<double> DMb;
+        double DM;
         std::vector<double> XM;
 
         std::vector<double> U;

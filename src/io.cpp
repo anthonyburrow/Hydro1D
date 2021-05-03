@@ -43,18 +43,24 @@ namespace myHydro
                     cout << "  Initial radius of star: " << initRMax << endl;
                     break;
                 case 2 :
+                    double totalMass;
+                    iss >> totalMass;
+                    params.totalMass = totalMass;
+                    cout << "  Total mass: " << totalMass << " m_sol" << endl;
+                    break;
+                case 3 :
                     double nIter;
                     iss >> nIter;
                     params.nIter = nIter;
                     cout << "  Number of time steps: " << nIter << endl;
                     break;
-                case 3 :
+                case 4 :
                     double initDt;
                     iss >> initDt;
                     params.initDt = initDt;
                     cout << "  Initial dt: " << initDt << endl;
                     break;
-                case 4 :
+                case 5 :
                     bool freeFall;
                     iss >> freeFall;
                     params.freeFall = freeFall;

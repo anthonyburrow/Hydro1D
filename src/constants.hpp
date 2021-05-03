@@ -34,6 +34,6 @@ namespace myHydro
     static const double K2 = K0 / (18.0 * rhoNuc * m_n);
 
     // Central density (M = 10 Msol, R = 10^10 cm)
-    static const double rhoc = 2e10;   // g cm^-3
-
+    static const double rhoc = 10.0 * myHydro::msol / (pi4 * pow(1e10, 3) * (one_third - 0.25));
+    // static const double rhoc = 2e10;   // g cm^-3
 }

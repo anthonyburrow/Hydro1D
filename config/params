@@ -1,8 +1,11 @@
 # Number of zones
 100
 
-#  Initial radius of star (cm)
+# Initial radius of star (cm)
 1e10
+
+# Total stellar mass (solar masses)
+10
 
 # Number of iterations
 10000

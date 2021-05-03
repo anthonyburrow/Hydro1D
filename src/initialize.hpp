@@ -6,6 +6,8 @@
 
 namespace myHydro
 {
+    void initDM(myHydro::Hydro &hydro);
+
     void initR(myHydro::Hydro &hydro);
     void initU(myHydro::Hydro &hydro);
 
