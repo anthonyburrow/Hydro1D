@@ -1,8 +1,8 @@
 # Number of zones
-100
+6493
 
 #  Initial radius of star (cm)
-1e10
+1.37e9
 
 # Number of iterations
 10000

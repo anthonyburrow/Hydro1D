@@ -60,7 +60,7 @@ fout = open('data_cell_centered.txt','w')
 fout.write('mass, radius, density, pressure\n')
 
 for i in list(range(len(rho)-1)):
-        fout.write(str(M[i])+' '+str((rad[i+1]+rad[i])/2)+' '+str((rho[i+1]+rho[i])/2)+' '+str((P[i+1]+P[i])/2)+'\n')
+        fout.write(str(M[i+1]-M[i])+' '+str((rad[i+1]+rad[i])/2)+' '+str((rho[i+1]+rho[i])/2)+' '+str((P[i+1]+P[i])/2)+'\n')
 
 fout.close()
 
