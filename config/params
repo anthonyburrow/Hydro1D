@@ -1,14 +1,14 @@
 # Number of zones
-6493
+100
 
 #  Initial radius of star (cm)
 1.37e9
 
 # Total stellar mass (solar masses)
-1
+10
 
 # Number of iterations
-10000
+1000
 
 # Initial time interval (sec)
 0.0001

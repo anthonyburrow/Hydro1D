@@ -60,13 +60,13 @@ namespace myHydro
     void Hydro::initVectors()
     {
         cout << "Setting initial conditions..." << endl;
+        myHydro::readHydrostatic(*this);
+
         myHydro::initDM(*this);
 
         myHydro::initU(*this);
-        myHydro::initV(*this);
-        myHydro::initR(*this);
 
-        myHydro::calcXM(*this);
+        myHydro::calcXM(*this);   // can either read or calculate
 
         myHydro::initQ(*this);
         myHydro::initT(*this);
