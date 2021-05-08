@@ -62,7 +62,7 @@ namespace myHydro
         cout << "Setting initial conditions..." << endl;
         myHydro::readHydrostatic(*this);
 
-        myHydro::initDM(*this);
+        myHydro::calcDM(*this);
 
         myHydro::initU(*this);
 

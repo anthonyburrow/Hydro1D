@@ -6,6 +6,7 @@
 
 namespace myHydro
 {
+    void calcDM(myHydro::Hydro &hydro);
     void calcXM(myHydro::Hydro &hydro);
 
     void calcR(myHydro::Hydro &hydro);

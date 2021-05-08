@@ -12,6 +12,12 @@ using namespace std;
 
 namespace myHydro
 {
+    void calcDM(myHydro::Hydro &hydro)
+    {
+        // Uniform mass per zone
+        hydro.DM = hydro.totalMass / hydro.nZones;
+    }
+
     void calcXM(myHydro::Hydro &hydro)
     {
         hydro.XM[0] = myHydro::zero;   // BC

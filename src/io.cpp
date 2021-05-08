@@ -81,7 +81,7 @@ namespace myHydro
 
     void readHydrostatic(myHydro::Hydro &hydro)
     {
-        string filename = "./fort/data_cell_centered.txt";
+        string filename = "./fort/hydro_input.txt";
         cout << "Getting initial conditions from: " << filename << endl;
 
         ifstream initFile(filename);
@@ -90,14 +90,14 @@ namespace myHydro
         hydro.R[0] = myHydro::zero;
 
         // mass, radius, density, pressure in cgs
-        double mass, rad, rho, press;
-        int i = 1;
-        while(initFile >> mass >> rad >> rho >> press);
+        double mass, rad, rho;
+        int i = 0;
+        while(initFile >> mass >> rad >> rho)
         {
-            hydro.R[i] = rad;
+            hydro.R[i + 1] = rad;
             hydro.V[i] = 1.0 / rho;
 
-            i++;
+            ++i;
         }
     }
 
