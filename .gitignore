@@ -1,6 +1,8 @@
 bin/
 output/
 
+fort/*.txt
+
 doc/figs/*
 
 .vscode
