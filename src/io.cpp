@@ -128,7 +128,7 @@ namespace myHydro
         {
             hydro.fileV << hydro.V[i] << " ";
             hydro.fileP << hydro.P[i] << " ";
-            hydro.fileQ << hydro.P[i] << " ";
+            hydro.fileQ << hydro.Q[i] << " ";
         }
 
         hydro.fileR << endl;
