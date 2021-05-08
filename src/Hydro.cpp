@@ -35,7 +35,8 @@ namespace myHydro
         fileR("./output/R.dat"),
         fileV("./output/V.dat"),
         // fileT("./output/T.dat"),
-        fileP("./output/P.dat")
+        fileP("./output/P.dat"),
+        fileQ("./output/Q.dat")
     {
         // Parameters
         nZones = params.nZones;

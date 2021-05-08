@@ -41,7 +41,8 @@ namespace myHydro
                     double initRMax;
                     iss >> initRMax;
                     params.initRMax = initRMax;
-                    cout << "  Initial radius of star: " << initRMax << endl;
+                    cout << "  Initial radius of star: " << initRMax << " cm"
+                         << endl;
                     break;
                 case 2 :
                     double totalMass;
@@ -110,6 +111,7 @@ namespace myHydro
         hydro.fileU << setprecision(n_digits);
         hydro.fileV << setprecision(n_digits);
         hydro.fileP << setprecision(n_digits);
+        hydro.fileQ << setprecision(n_digits);
     }
 
     void writeOutput(myHydro::Hydro &hydro)
@@ -126,11 +128,13 @@ namespace myHydro
         {
             hydro.fileV << hydro.V[i] << " ";
             hydro.fileP << hydro.P[i] << " ";
+            hydro.fileQ << hydro.P[i] << " ";
         }
 
         hydro.fileR << endl;
         hydro.fileU << endl;
         hydro.fileV << endl;
         hydro.fileP << endl;
+        hydro.fileQ << endl;
     }
 }

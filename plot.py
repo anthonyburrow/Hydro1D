@@ -90,12 +90,10 @@ line, = ax.plot([], [], 'o-', color='k', markersize=2)
 ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
 ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$')
 
-ax.set_xlim(1e-4, 1e10)
-ax.set_ylim(-5e11, 0)
+ax.set_xlim(1e-4, 1.37e9)
+ax.set_ylim(-2e9, 2e9)
 
-ax.set_xscale('log')
-
-ax.set_xlim(left=1e6)
+# ax.set_xscale('log')
 
 title = ax.set_title('')
 
