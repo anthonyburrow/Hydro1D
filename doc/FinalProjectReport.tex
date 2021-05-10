@@ -13,26 +13,120 @@
 \usepackage{float}
 \graphicspath{{./figs/}}
 
+\usepackage{natbib}
+\bibliographystyle{aasjournal}
+
 \begin{document}
 
 \begin{center}\begin{LARGE}
 \textbf{ASTR 5900 Final Project: Hydro1D}
 \end{LARGE}\end{center}
 
+\begin{center}
+\textbf{Anthony Burrow and Sarah Stangl}
+\end{center}
+
 \section{Introduction and Goals}
 
 This project is aimed to model the infall and subsequent shockwave exhibited by
 core-collapse supernovae (CCSNe). In modern studies of all types of SNe
 (including Type Ia SNe, CCSNe, etc.), one of the most prominent goals involved
-is to attain more understanding of the so-called progenitor problem.
+is to achieve a better understanding of the so-called progenitor problem. To
+briefly summarize, we wish for the ability to understand the different possible
+scenarios of a supernova progenitor as well as to diagnose the scenario with
+observable features from the subsequent explosion. If this could be achieved,
+this would provide insight into stellar evolution as a whole and minimize a
+large source of uncertainty in many interesting predictions in astronomy made
+by using these SNe.
+
+The goal of this project is only to model the dynamics of the collapse of a
+massive ($\sim10\ M_\odot$) star. This is done using a 1D Lagrangian-frame
+hydrodynamical code that solves equations of mass conservation, momentum
+conservation, and energy conservation, with the addition of an equation of
+state. Our secondary and hopeful goal is to find a distinguishable shock event
+that should occur when a bulk of infalling material rapidly rebounds off of a
+highly dense and degenerate core of neutrons. This shockwave is what signifies
+that a CCSN occurs.
 
 \section{Methods}
 
-* assumptions (mass, radius)
+To generate the aforementioned model, we first assume a star of mass
+$10\ M_\odot$ coming directly from hydrostatic equilibrium. The star's collapse
+would be caused by a sudden decrease in pressure. The model is separated into a
+set number of zones, all with equal mass. Because this is a Lagrangian
+hydrocode, the zones always have the same constant mass.
 
-* hydrostatic LE eq. solved for initial density using aforementioned assumptions
+The initial conditions (radius, density, pressure) are all solved for
+hydrostatic equilibrium through the Lane-Emden equation. In order to solve
+this equation we assume the star---which will be treated as a fully degenerate
+Fermi gas until nuclear degeneracy---can be modeled as an $n=3$ polytrope. By
+doing this, we therefore assume an equation of state of
+$P = K_{4/3}\ \rho^{4/3}$, where $P$ is pressure, $\rho$ is density, and
+$K_{4/3} = 1.2 \times 10^{15}$ in CGS units \citep{arnett66}. This equation of
+state is for densities under nuclear degeneracy
+$\rho_{nuc} = 2.3 \times 10^{14}$ g cm$^{-3}$. We also assume an intial
+central density of $\rho_c = 1.0 \times 10^7$ g cm$^{-3}$.
 
-* hydrocode details
+% Insert initial density vs m_int plot
+
+Once these initial conditions have been set, the dynamics of density, pressure,
+and velocities are calculated by following the exact difference equations found
+in the Appendix of \citet{arnett66}. However, because of time constraints, we
+simplify the calculation heavily by not accounting for radiation or neutrinos
+as a source of energy. Because we assume a polytropic equation of state, our
+model also has zero temperature, and no temperature calculations are needed.
+From the initial conditions, we do 10,000 iterations of calculating zone
+boundary velocities ($U_j$), boundary positions ($R_j$), specific volume of
+each zone ($V_{j + 1/2} = 1 / \rho_{j + 1/2}$), and zone pressure
+($P_{j + 1/2}$) in that order. These are calculated using simple difference
+equations that describe the equations of mass, momentum, and energy
+conservation, and they are all listed in the Appendix of \citet{arnett66}.
+
+From an initial time step (we typically us $\Delta t^0 = 0.001$ second), each
+iteration calculates a new maximum time step that holds causality due to sound
+velocity. This is done in the same way as \citet{colgatewhite64} by finding the
+maximum value (for any $j^\text{th}$ zone) of
+$$
+\begin{aligned}
+\Delta t^{n + 1/2}
+&= \frac{0.02 \cdot V^n_{j + 1/2} \Delta t^{n - 1/2}}
+        {|V^n_{j + 1/2} - V^n_{j - 1/2}|}, \\
+\Delta t^n
+&= \frac{1}{2} (\Delta t^{n + 1/2} + \Delta t^{n - 1/2}).
+\end{aligned}
+$$
+We found that this keeps causality well for our purposes; in other words, this
+means no negative densities, etc. appear due to over-correction to the
+boundary positions.
+
+To reiterate, the pressure we assume is due solely to electron pressure, i.e.
+$$
+\begin{aligned}
+P_j = P(e^-)_j = K_{4/3}\ (1 / V_j)^{4/3}.
+\end{aligned}
+$$
+However, to model neutron degeneracy pressure, for any zone with densities
+above nuclear density $\rho_{nuc}$, this pressure is ammended to
+$$
+\begin{aligned}
+P_j = P(e^-)_j + K_3\ (1 / V_j)^3,
+\end{aligned}
+$$
+where
+$$
+\begin{aligned}
+K_3 = \frac{K_0}{27 \rho_c^2 m_n}
+\end{aligned}
+$$
+with $K_0 = 140$ MeV and $m_n = 1.674920 \times 10^{-24}$ g is the mass of a
+neutron. This is based on the cold nuclear pressure suggested by and
+$K_0 = K_0(0.33)$ found in \citet{bck85} with $\gamma = 3$.
+
+Finally, to cause a collapse, we calculate our initial hydrostatic condition
+with $K'_{4/3} = 1.1 \cdot K_{4/3}$ within the equation of state, and then
+lower the pressure by using $K_{4/3}$ in our subsequent iterations instead. The
+lowered pressure should lead to gravitational domination and a collapse.
+
 
 \section{Results}
 
@@ -46,5 +140,6 @@ is to attain more understanding of the so-called progenitor problem.
 
 
 
+\bibliography{FinalProjectReport}
 
 \end{document}

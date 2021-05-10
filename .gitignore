@@ -3,6 +3,12 @@ output/
 
 fort/*.txt
 
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
 doc/figs/*
 
 .vscode
