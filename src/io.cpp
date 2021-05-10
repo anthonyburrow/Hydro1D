@@ -83,7 +83,7 @@ namespace myHydro
     void readHydrostatic(myHydro::Hydro &hydro)
     {
         string filename = "./fort/hydro_input.txt";
-        cout << "Getting initial conditions from: " << filename << endl;
+        cout << "Setting initial conditions from: " << filename << endl;
 
         ifstream initFile(filename);
         string line;

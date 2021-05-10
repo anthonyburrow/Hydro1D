@@ -54,7 +54,7 @@ rad = lamb * xi
 
 #fout.close()
 
-M = -4 * 3.141592 * lamb**3 * rho_c * xi**2 * dDdXI
+M = -4 * np.pi * lamb**3 * rho_c * xi**2 * dDdXI
 
 fout = open('data_cell_centered.txt','w')
 fout.write('mass, radius, density, pressure\n')

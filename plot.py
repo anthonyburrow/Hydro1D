@@ -82,16 +82,60 @@ n_iter = data_R.shape[0]
 
 #     plt.close('all')
 
-#/////////////////////////////////
+fig, ax = plt.subplots()
+
+line, = ax.plot([], [], 'o-', color='k', markersize=2)
+
+ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
+ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$')
+
+ax.set_xlim(1e5, 1.37e9)
+ax.set_ylim(-1e10, 1e10)
+
+ax.set_xscale('log')
+# ax.set_yscale('log')
+
+title = ax.set_title('')
+
+def init():
+    line.set_data([], [])
+    title.set_text('')
+    return line, title
+
+def animate(i):
+    line.set_data(data_R[i], data_U[i])
+    title.set_text('t = %.3e sec' % time[i])
+    return line, title,
+
+anim = FuncAnimation(fig, animate, init_func=init,
+                     frames=range(0, n_iter, int(n_iter / 100)),
+                     interval=75, blit=True)
+
+fn = '%s/U_R.gif' % _save_dir
+anim.save(fn, writer='imagemagick')
+
+plt.close('all')
+
+# Q / P vs radius
+#//////////////////////////////
+# fn = '%s/Q.dat' % _data_dir
+# data_Q = np.loadtxt(fn)
+
+# fn = '%s/P.dat' % _data_dir
+# data_P = np.loadtxt(fn)
+
+# _save_dir = '%s/%s' % (_fig_dir, 'QP_R')
+# os.makedirs(_save_dir, exist_ok=True)
+
 # fig, ax = plt.subplots()
 
 # line, = ax.plot([], [], 'o-', color='k', markersize=2)
 
 # ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
-# ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$')
+# ax.set_ylabel(r'$\mathrm{Q\ /\ P}$')
 
 # ax.set_xlim(1e-4, 1.37e9)
-# ax.set_ylim(-2e9, 2e9)
+# ax.set_ylim(-1e-4, 5)
 
 # # ax.set_xscale('log')
 
@@ -103,57 +147,13 @@ n_iter = data_R.shape[0]
 #     return line, title
 
 # def animate(i):
-#     line.set_data(data_R[i], data_U[i])
-#     title.set_text('t = %.3e sec' % time[i])
+#     line.set_data(data_R[i, :-1], data_Q[i] / data_P[i])
+#     title.set_text('t = %.4e sec' % time[i])
 #     return line, title,
 
 # anim = FuncAnimation(fig, animate, init_func=init,
 #                      frames=range(0, n_iter, int(n_iter / 100)),
 #                      interval=75, blit=True)
 
-# fn = '%s/U_R.gif' % _save_dir
+# fn = '%s/QP_R.gif' % _save_dir
 # anim.save(fn, writer='imagemagick')
-
-# plt.close('all')
-#////////////////////////////////////
-
-# Q / P vs radius
-fn = '%s/Q.dat' % _data_dir
-data_Q = np.loadtxt(fn)
-
-fn = '%s/P.dat' % _data_dir
-data_P = np.loadtxt(fn)
-
-_save_dir = '%s/%s' % (_fig_dir, 'QP_R')
-os.makedirs(_save_dir, exist_ok=True)
-
-fig, ax = plt.subplots()
-
-line, = ax.plot([], [], 'o-', color='k', markersize=2)
-
-ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
-ax.set_ylabel(r'$\mathrm{Q\ /\ P}$')
-
-ax.set_xlim(1e-4, 1.37e9)
-ax.set_ylim(-1e-4, 5)
-
-# ax.set_xscale('log')
-
-title = ax.set_title('')
-
-def init():
-    line.set_data([], [])
-    title.set_text('')
-    return line, title
-
-def animate(i):
-    line.set_data(data_R[i, :-1], data_Q[i] / data_P[i])
-    title.set_text('t = %.4e sec' % time[i])
-    return line, title,
-
-anim = FuncAnimation(fig, animate, init_func=init,
-                     frames=range(0, n_iter, int(n_iter / 100)),
-                     interval=75, blit=True)
-
-fn = '%s/QP_R.gif' % _save_dir
-anim.save(fn, writer='imagemagick')

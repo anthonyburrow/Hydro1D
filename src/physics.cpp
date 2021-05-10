@@ -184,7 +184,7 @@ namespace myHydro
         }
         else
         {
-            // Assume "stiff" gamma = 2 for nuclear degeneracy, plus the
+            // Assume "stiff" gamma = 3 for nuclear degeneracy, plus the
             //    electron degeneracy term
             P = Pelectron + myHydro::K3 * pow(rho, 3.0);
         }

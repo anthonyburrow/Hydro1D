@@ -60,7 +60,6 @@ namespace myHydro
 
     void Hydro::initVectors()
     {
-        cout << "Setting initial conditions..." << endl;
         myHydro::readHydrostatic(*this);
 
         myHydro::calcDM(*this);

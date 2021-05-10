@@ -23,7 +23,8 @@ namespace myHydro
     static const double rhoNuc = 2.3e14;   // g cm^-3
 
     // Polytropic (gamma = 4/3) pressure constant
-    static const double K4_3 = 4.93685e14;   // cgs
+    static const double K4_3 = 1.2e15;   // cgs
+    // static const double K4_3 = 4.93685e14;   // cgs
 
     // Polytropic (gamma = 2) pressure constant
     //    Based on Baron, Cooperstein, Kahana 1985 with x = 0.33, gamma = 3
