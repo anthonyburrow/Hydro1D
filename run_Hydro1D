@@ -2,7 +2,6 @@
 
 mkdir -p ./doc/
 mkdir -p ./doc/figs/
-rm -r ./doc/figs/*
 
 echo "Calculating polytropic solution to Lane-Emden..."
 ./bin/laneemden

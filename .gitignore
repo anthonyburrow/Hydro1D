@@ -9,6 +9,8 @@ fort/*.txt
 *.log
 *.out
 *.synctex.gz
+
 doc/figs/*
+!doc/figs/chosen/
 
 .vscode

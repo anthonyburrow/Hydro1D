@@ -58,13 +58,15 @@ np.savetxt(fn, output, fmt=['%.12e', '%.12e', '%.12e'])
 fig, ax = plt.subplots(dpi=200)
 
 ax.plot(m_int, density, 'ko', ms=0.5)
-ax.plot(m_predict * total_mass, poly(m_predict) * rhoc, 'r-')
+ax.plot(m_predict * total_mass, poly(m_predict) * rhoc, 'r-', label='fit')
 
 ax.set_xlabel('interior mass (g)')
 ax.set_ylabel('zone density')
 
 ax.set_xlim(left=0)
 ax.set_ylim(0, rhoc)
+
+ax.legend()
 
 fn = './doc/figs/rho_mass.pdf'
 fig.savefig(fn, dpi=200)
