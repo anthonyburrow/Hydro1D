@@ -1,17 +1,14 @@
 # Number of zones
 100
 
-#  Initial radius of star (cm)
-1.37e9
-
 # Total stellar mass (solar masses)
-1
+10
 
 # Number of iterations
 10000
 
 # Initial time interval (sec)
-0.001
+0.0001
 
 # System in free-fall (1 = true, 0 = false)
 0

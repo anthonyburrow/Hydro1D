@@ -22,9 +22,9 @@ namespace myHydro
     // Nuclear density
     static const double rhoNuc = 2.3e14;   // g cm^-3
 
-    // Polytropic (gamma = 4/3) pressure constant
-    static const double K4_3 = 1.2e15;   // cgs
-    // static const double K4_3 = 4.93685e14;   // cgs
+    // Polytropic (gamma = 4/3) pressure constant for 10 m_sol
+    // static const double K4_3 = 1.2e15;   // cgs
+    static const double K4_3 = 1.78373175076e15;   // cgs
 
     // Polytropic (gamma = 2) pressure constant
     //    Based on Baron, Cooperstein, Kahana 1985 with x = 0.33, gamma = 3
@@ -34,7 +34,4 @@ namespace myHydro
     const double gamma = 3.0;
 
     static const double K3 = K0 / (9.0 * gamma * pow(rhoNuc, 2.0) * m_n);
-
-    // Central density (M = 10 Msol, R = 10^10 cm)
-    // static const double rhoc = 2e10;   // g cm^-3
 }

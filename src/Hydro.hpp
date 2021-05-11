@@ -15,7 +15,6 @@ namespace myHydro
         int nZones;
         int nBoundaries;
         int nIter;
-        double initRMax;
         double totalMass;
         bool freeFall;
 
