@@ -33,8 +33,7 @@
 
 This project is aimed to model the infall and subsequent shockwave exhibited by
 core-collapse supernovae (CCSNe). In modern studies of all types of SNe
-(including Type Ia SNe, CCSNe, etc.), one of the most prominent goals involved
-is to achieve a better understanding of the so-called progenitor problem. To
+(including Type Ia SNe, CCSNe, etc.), one of the most prominent goals is to achieve a better understanding of the so-called progenitor problem. To
 briefly summarize, we wish for the ability to understand the different possible
 scenarios of a supernova progenitor as well as to diagnose the scenario with
 observable features from the subsequent explosion. If this could be achieved,
@@ -48,7 +47,7 @@ hydrodynamical code that solves equations of mass conservation, momentum
 conservation, and energy conservation, with the addition of an equation of
 state. Our secondary and hopeful goal is to implement a distinguishable shock event
 that should occur when a bulk of infalling material rapidly rebounds off of a
-highly dense and degenerate core of neutrons. This shockwave is what signifies that a CCSN occurs.
+highly dense and degenerate core of neutrons. This shockwave is what signifies that a CCSN explosion occurs.
 
 \section{Methods}
 
@@ -88,7 +87,7 @@ where
 \begin{equation}
     \lambda_{n}=\left[(n+1)\left( \frac{K \rho_{c}^{(1-n)/n}}{4\pi G} \right) \right]^{1/2}
 \end{equation}
-with Newton's gravitational constant $G$, and constant $K$.
+with Newton's gravitational constant $G$, and a constant $K$.
 % \iffalse
 % \begin{equation}
 %     K = \left[ \frac{3(1-\beta}{a}\right]^{1/3}\left(\frac{k}{\beta \mu m_{H}} \right)^{4/3}
@@ -313,7 +312,9 @@ Anthony created the structure and setup the underlying mathematical equations wi
 itself. He also assisted in connecting the initial conditions from Sarah to the input of
 the hydrocode.
 
-Sarah tried to set up realistic initial model conditions from solving the Lane-Emden equation.
+Sarah worked on solving the Lane-Emden equation and deriving the initial model conditions from the results. She also attempted to help get the hydrocode working using physics she'd used in hydrocodes in the past. Also, she tried playing around with model parameters and the K value to try, unsuccessfully, to get a shock.
+
+We both worked on writing the final paper.
 
 
 \section{Running the Program}
