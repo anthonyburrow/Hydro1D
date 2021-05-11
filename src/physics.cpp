@@ -12,6 +12,12 @@ using namespace std;
 
 namespace myHydro
 {
+    void calcDM(myHydro::Hydro &hydro)
+    {
+        // Uniform mass per zone
+        hydro.DM = hydro.totalMass / hydro.nZones;
+    }
+
     void calcXM(myHydro::Hydro &hydro)
     {
         hydro.XM[0] = myHydro::zero;   // BC
@@ -178,9 +184,9 @@ namespace myHydro
         }
         else
         {
-            // Assume "stiff" gamma = 2 for nuclear degeneracy, plus the
+            // Assume "stiff" gamma = 3 for nuclear degeneracy, plus the
             //    electron degeneracy term
-            P = Pelectron + myHydro::K2 * pow(rho, 2.0);
+            P = Pelectron + myHydro::K3 * pow(rho, 3.0);
         }
     }
 

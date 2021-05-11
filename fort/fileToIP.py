@@ -44,6 +44,12 @@ for i in list(range(len(rho))):
 	fout.write(str(M[i])+' '+str(rad[i])+' '+str(rho[i])+'\n')# '+str(P[i])+'\n')
 
 fout.close()
+#for i in list(range(len(rho)-1)):
+#	fout.write(str(M[i+1] - M[i])+' '+str((rad[i+1]+rad[i])/2)+' '+str((rho[i+1]+rho[i])/2)+' '+str((P[i+1]+P[i])/2)+'\n')
+
+#fout.close()
+
+M = -4 * np.pi * lamb**3 * rho_c * xi**2 * dDdXI
 
 fout = open('data.txt','w')
 fout.write('mass, radius, density\n')#, pressure\n')

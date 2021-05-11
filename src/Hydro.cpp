@@ -35,7 +35,8 @@ namespace myHydro
         fileR("./output/R.dat"),
         fileV("./output/V.dat"),
         // fileT("./output/T.dat"),
-        fileP("./output/P.dat")
+        fileP("./output/P.dat"),
+        fileQ("./output/Q.dat")
     {
         // Parameters
         nZones = params.nZones;
@@ -59,14 +60,13 @@ namespace myHydro
 
     void Hydro::initVectors()
     {
-        cout << "Setting initial conditions..." << endl;
-        myHydro::initDM(*this);
+        myHydro::readHydrostatic(*this);
+
+        myHydro::calcDM(*this);
 
         myHydro::initU(*this);
-        myHydro::initV(*this);
-        myHydro::initR(*this);
 
-        myHydro::calcXM(*this);
+        myHydro::calcXM(*this);   // can either read or calculate
 
         myHydro::initQ(*this);
         myHydro::initT(*this);

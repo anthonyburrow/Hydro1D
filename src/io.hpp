@@ -20,6 +20,8 @@ namespace myHydro
 
     hydroParams readParams();
 
+    void readHydrostatic(myHydro::Hydro &hydro);
+
     void setOutputPrecision(myHydro::Hydro &hydro);
     void writeOutput(myHydro::Hydro &hydro);
 }

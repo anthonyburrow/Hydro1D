@@ -7,6 +7,7 @@
 
 #include "io.hpp"
 #include "Hydro.hpp"
+#include "constants.hpp"
 
 using namespace std;
 
@@ -40,7 +41,8 @@ namespace myHydro
                     double initRMax;
                     iss >> initRMax;
                     params.initRMax = initRMax;
-                    cout << "  Initial radius of star: " << initRMax << endl;
+                    cout << "  Initial radius of star: " << initRMax << " cm"
+                         << endl;
                     break;
                 case 2 :
                     double totalMass;
@@ -78,6 +80,28 @@ namespace myHydro
         return params;
     }
 
+    void readHydrostatic(myHydro::Hydro &hydro)
+    {
+        string filename = "./fort/hydro_input.txt";
+        cout << "Setting initial conditions from: " << filename << endl;
+
+        ifstream initFile(filename);
+        string line;
+
+        hydro.R[0] = myHydro::zero;
+
+        // mass, radius, density, pressure in cgs
+        double mass, rad, rho;
+        int i = 0;
+        while(initFile >> mass >> rad >> rho)
+        {
+            hydro.R[i + 1] = rad;
+            hydro.V[i] = 1.0 / rho;
+
+            ++i;
+        }
+    }
+
     void setOutputPrecision(myHydro::Hydro &hydro)
     {
         const int n_digits = numeric_limits<double>::max_digits10;
@@ -87,6 +111,7 @@ namespace myHydro
         hydro.fileU << setprecision(n_digits);
         hydro.fileV << setprecision(n_digits);
         hydro.fileP << setprecision(n_digits);
+        hydro.fileQ << setprecision(n_digits);
     }
 
     void writeOutput(myHydro::Hydro &hydro)
@@ -103,11 +128,13 @@ namespace myHydro
         {
             hydro.fileV << hydro.V[i] << " ";
             hydro.fileP << hydro.P[i] << " ";
+            hydro.fileQ << hydro.Q[i] << " ";
         }
 
         hydro.fileR << endl;
         hydro.fileU << endl;
         hydro.fileV << endl;
         hydro.fileP << endl;
+        hydro.fileQ << endl;
     }
 }

@@ -4,93 +4,21 @@
 
 #include "Hydro.hpp"
 #include "constants.hpp"
-#include <fstream>
-#include <string>
+#include "io.hpp"
 
 using namespace std;
 
 namespace myHydro
 {
-    void initDM(myHydro::Hydro &hydro)
-    {
-	/*
-        // Uniform mass per zone
-        hydro.DM = hydro.totalMass / hydro.nZones;
-	*/
-	ifstream fs;
-	string line;
-	fs.open("../fort/data_cell_centered.txt");
-
-	// mass, radius, density, pressure in cgs
-	int mass, rad, den, press;
-	int i = 0;
-	while(fs >> mass >> rad >> den >> press);
-	{
-		hydro.DM[i] = mass;
-		i = i + 1;
-	}
-    }
-
-    void initR(myHydro::Hydro &hydro)
-    {
-        // Give zones equal mass
-        double prevRCube = myHydro::zero;
-        double newRCube;
-        // Start with uniform spacial boundaries
-        /*const double dR = hydro.initRMax / hydro.nZones;
-
-        hydro.R[0] = myHydro::zero;   // BC
-
-        for (int i = 0; i < hydro.nZones; i++)
-        {
-            newRCube = prevRCube + hydro.DM * hydro.V[i] / myHydro::pi4_3;
-
-            hydro.R[i + 1] = cbrt(newRCube);
-
-            prevRCube = newRCube;
-        }
-            hydro.R[i] = hydro.R[i - 1] + dR;
-        }*/
-	
-	ifstream fs;
-	string line;
-	fs.open("../fort/data_cell_centered.txt");
-
-	// mass, radius, density, pressure in cgs
-	int mass, rad, den, press;
-	int i = 0;
-	while(fs >> mass >> rad >> den >> press);
-	{
-		hydro.R[i] = rad;
-		i = i + 1;
-	}
-	hydro.R[0] = 0;	
-
-    }
-
     void initU(myHydro::Hydro &hydro)
     {
-	/*
         hydro.U[0] = myHydro::zero;   // BC
 
         // Start from rest
         for (int i = 1; i < hydro.nBoundaries; i++)
         {
             hydro.U[i] = myHydro::zero;
-        }*/
-	ifstream fs;
-        string line;
-        fs.open("../fort/data_cell_centered.txt");
-
-        // mass, radius, density, pressure in cgs
-        int mass, rad, den, press;
-        int i = 0;
-        while(fs >> mass >> rad >> den >> press);
-	{
-        	hydro.U[i] = press;
-		i = i + 1;
         }
-	hydro.U[0] = 0;
     }
 
     void initQ(myHydro::Hydro &hydro)
@@ -100,38 +28,6 @@ namespace myHydro
         {
             hydro.Q[i] = myHydro::zero;
         }
-    }
-
-    void initV(myHydro::Hydro &hydro)
-    {
-	/*
-        // initial (1 / density) profile (needs to integrate to 10 M_sol)
-        double rho;
-
-        // hydro.V[0] = 1.0 / myHydro::rhoc;
-
-        // TODO: Read in density values
-        for (int i = 1; i < hydro.nZones; i++)
-        {
-            rho = myHydro::rhoc * (1 - hydro.R[i] / hydro.initRMax);
-            hydro.V[i] = 1.0 / rho;
-        }
-            rho = myHydro::rhoc * (1 - sqrt(hydro.R[i] / hydro.initRMax));
-            hydro.V[i] = 1 / rho;
-        }*/
-	ifstream fs;
-	string line;
-	fs.open("../fort/data_cell_centered.txt");
-
-	// mass, radius, density, pressure in cgs
-	int mass, rad, den, press;
-	int i = 0;
-	while(fs >> mass >> rad >> den >> press);
-	{
-		hydro.V[i] = 1 / den;
-		i = i + 1;
-	}
-	hydro.V[0] = 1 / 1e7;
     }
 
     void initT(myHydro::Hydro &hydro)

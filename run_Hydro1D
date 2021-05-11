@@ -1,5 +1,9 @@
 #!/usr/bin/bash
 
+echo "Interpolating Lane-Emden result..."
+python ./fort/interpolate.py
+echo
+
 echo "Running Hydro1D..."
 ./bin/Hydro1D
 echo

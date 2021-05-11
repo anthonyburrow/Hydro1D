@@ -17,23 +17,24 @@ namespace myHydro
     static const double msol = 1.989e33;   // Solar mass (g)
 
     // Newton gravitation constant
-    static const double G = 6.6743e-8;   // cm^3 g^-1 s^-2
+    static const double G = 6.6743e-8;   // Dyne cm g
 
     // Nuclear density
     static const double rhoNuc = 2.3e14;   // g cm^-3
 
     // Polytropic (gamma = 4/3) pressure constant
-    static const double K4_3 = 3.8468e14;   // cgs
+    static const double K4_3 = 1.2e15;   // cgs
+    // static const double K4_3 = 4.93685e14;   // cgs
 
     // Polytropic (gamma = 2) pressure constant
-    //    Based on Baron, Cooperstein, Kahana 1985 with x = 0.33, gamma = 2
-    //    P = [ K0 / (9 * gamma * rhoNuc * m_n) ] * rho^2
+    //    Based on Baron, Cooperstein, Kahana 1985 with x = 0.33, gamma = 3
+    //    P = [ K0 / (9 * gamma * rhoNuc^2 * m_n) ] * rho^3
     const double m_n = 1.674920e-24;   // Mass of neutron (g)
-    const double K0 = 220.0 * 1.60218e-6;   // erg
+    const double K0 = 140.0 * 1.60218e-6;   // erg
+    const double gamma = 3.0;
 
-    static const double K2 = K0 / (18.0 * rhoNuc * m_n);
+    static const double K3 = K0 / (9.0 * gamma * pow(rhoNuc, 2.0) * m_n);
 
     // Central density (M = 10 Msol, R = 10^10 cm)
-    static const double rhoc = 10.0 * myHydro::msol / (pi4 * pow(1e10, 3) * (one_third - 0.25));
     // static const double rhoc = 2e10;   // g cm^-3
 }
