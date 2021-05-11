@@ -42,7 +42,6 @@ namespace myHydro
         nZones = params.nZones;
         nBoundaries = nZones + 1;
         nIter = params.nIter;
-        initRMax = params.initRMax;
         totalMass = params.totalMass * myHydro::msol;
         freeFall = params.freeFall;
 

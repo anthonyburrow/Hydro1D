@@ -1,7 +1,17 @@
 #!/usr/bin/bash
 
+mkdir -p ./doc/
+mkdir -p ./doc/figs/
+rm -r ./doc/figs/*
+
+echo "Calculating polytropic solution to Lane-Emden..."
+./bin/laneemden
+python ./src/fileToIP.py
+rm ./output/poly3
+echo
+
 echo "Interpolating Lane-Emden result..."
-python ./fort/interpolate.py
+python ./src/interpolate.py
 echo
 
 echo "Running Hydro1D..."
@@ -9,7 +19,6 @@ echo "Running Hydro1D..."
 echo
 
 echo "Running plotting script..."
-rm -r ./doc/figs/*
 python plot.py
 echo
 

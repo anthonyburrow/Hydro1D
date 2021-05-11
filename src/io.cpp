@@ -38,31 +38,24 @@ namespace myHydro
                     cout << "  Number of zones: " << nZones << endl;
                     break;
                 case 1 :
-                    double initRMax;
-                    iss >> initRMax;
-                    params.initRMax = initRMax;
-                    cout << "  Initial radius of star: " << initRMax << " cm"
-                         << endl;
-                    break;
-                case 2 :
                     double totalMass;
                     iss >> totalMass;
                     params.totalMass = totalMass;
                     cout << "  Total mass: " << totalMass << " m_sol" << endl;
                     break;
-                case 3 :
+                case 2 :
                     double nIter;
                     iss >> nIter;
                     params.nIter = nIter;
                     cout << "  Number of time steps: " << nIter << endl;
                     break;
-                case 4 :
+                case 3 :
                     double initDt;
                     iss >> initDt;
                     params.initDt = initDt;
                     cout << "  Initial dt: " << initDt << endl;
                     break;
-                case 5 :
+                case 4 :
                     bool freeFall;
                     iss >> freeFall;
                     params.freeFall = freeFall;
@@ -82,7 +75,7 @@ namespace myHydro
 
     void readHydrostatic(myHydro::Hydro &hydro)
     {
-        string filename = "./fort/hydro_input.txt";
+        string filename = "./output/hydro_input.txt";
         cout << "Setting initial conditions from: " << filename << endl;
 
         ifstream initFile(filename);
@@ -90,7 +83,7 @@ namespace myHydro
 
         hydro.R[0] = myHydro::zero;
 
-        // mass, radius, density, pressure in cgs
+        // mass, radius, density in cgs
         double mass, rad, rho;
         int i = 0;
         while(initFile >> mass >> rad >> rho)

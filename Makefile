@@ -1,6 +1,9 @@
 CXX = g++
 CXXFLAGS = -g
 
+FC = gfortran
+FFLAGS =
+
 BIN_DIR = ./bin
 SRC_DIR = ./src
 
@@ -16,17 +19,29 @@ $(MAKE_DIRS):
 	$(MKDIR_P) $@
 
 # Target 1
-NAME = Hydro1D
-TARGET = $(BIN_DIR)/$(NAME)
-_SRC1 = $(NAME)
+NAME1 = Hydro1D
+TARGET1 = $(BIN_DIR)/$(NAME1)
+_SRC1 = $(NAME1)
 _SRC2 = Hydro initialize physics io
-SRC = $(_SRC1) $(_SRC2)
+SRC1 = $(_SRC1) $(_SRC2)
 
-_OBJ_LIST = $(addsuffix .o, $(SRC))
-OBJ_LIST = $(addprefix $(BIN_DIR)/, $(_OBJ_LIST))
+_OBJ_LIST = $(addsuffix .o, $(SRC1))
+OBJ_LIST1 = $(addprefix $(BIN_DIR)/, $(_OBJ_LIST))
 
-$(TARGET): $(OBJ_LIST)
+$(TARGET1): $(OBJ_LIST1)
 	$(CXX) $(CXXFLAGS) $^ -o $@
+
+# Target 2
+NAME2 = laneemden
+TARGET2 = $(BIN_DIR)/$(NAME2)
+_SRC1 = $(NAME2)
+SRC2 = $(_SRC1)
+
+_OBJ_LIST = $(addsuffix .o, $(SRC2))
+OBJ_LIST2 = $(addprefix $(BIN_DIR)/, $(_OBJ_LIST))
+
+$(TARGET2): $(OBJ_LIST2)
+	$(FC) $(FFLAGS) $^ -o $@
 
 # Object recipes
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
@@ -39,9 +54,12 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/%.h
 	$(CC) $(CCFLAGS) -c $< -o $@
 
-all: directories $(TARGET)
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.f90
+	$(FC) $(FFLAGS) -c $< -o $@
 
-TESTS = $(TARGET)
+all: directories $(TARGET1) $(TARGET2)
+
+TESTS = $(TARGET1)
 
 test: directories $(TESTS)
 
