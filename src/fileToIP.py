@@ -23,7 +23,7 @@ with open(fn) as F:
 lines = [l for l in lines if l]
 lines = [np.float64(l) for l in lines if l[0] != '#']
 
-M = lines[2] * msol
+M = lines[1] * msol
 
 # central density, assume 10^7
 rho_c = 1e7

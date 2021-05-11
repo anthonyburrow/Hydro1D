@@ -11,7 +11,6 @@ namespace myHydro
     struct hydroParams
     {
         int nZones;
-        double initRMax;
         double totalMass;
         double nIter;
         double initDt;

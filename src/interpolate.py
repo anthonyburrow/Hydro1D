@@ -27,11 +27,11 @@ lines = [np.float64(l) for l in lines if l[0] != '#']
 
 n_zones = int(lines[0])
 n_boundaries = n_zones + 1
-total_mass = lines[2] * msol
+total_mass = lines[1] * msol
 dm = total_mass / n_zones
 
 print('  Number of zones: %i' % n_zones)
-print('  Total mass: %.1f m_sol' % lines[2])
+print('  Total mass: %.1f m_sol' % lines[1])
 
 # Fit output
 params = np.polyfit(m_int / total_mass, density / rhoc, 10)

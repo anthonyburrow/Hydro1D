@@ -52,8 +52,8 @@ ax.plot(data_rho[::10], data_P[::10], 'o-', color='k', markersize=1)
 ax.set_xlabel(r'$\mathrm{\rho\ [g\ cm^{-3}]}$')
 ax.set_ylabel(r'$\mathrm{P\ [dynes\ cm^{-2}]}$')
 
-ax.set_xlim(1e1, 1e17)
-ax.set_ylim(1e17, 1e38)
+ax.set_xlim(1e4, 1e18)
+ax.set_ylim(1e21, 1e40)
 
 ax.set_xscale('log')
 ax.set_yscale('log')
@@ -129,7 +129,7 @@ for i in range(0, n_iter, 100):
 # fn = '%s/U_R.gif' % _save_dir
 # anim.save(fn, writer='imagemagick')
 
-# plt.close('all')
+plt.close('all')
 
 # Q / P vs radius (gif)
 # ------------------------
