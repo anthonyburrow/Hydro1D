@@ -79,10 +79,10 @@ for i in range(0, n_iter, 100):
 
     ax.plot(data_R[i, 1:], data_U[i, 1:], 'o-', color='k', markersize=2)
 
-    ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
-    ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$')
+    ax.set_xlabel(r'$\mathrm{R\ [cm]}$', fontsize=18)
+    ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$', fontsize=18)
 
-    ax.set_title('t = %.6e sec' % time[i])
+    ax.set_title('t = %.6e sec' % time[i], fontsize=18)
 
     # ax.set_xlim(1e5, 2.95e10)
     # ax.set_ylim(-1e11, 1e10)

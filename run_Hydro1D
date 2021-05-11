@@ -17,7 +17,7 @@ echo "Running Hydro1D..."
 ./bin/Hydro1D
 echo
 
-echo "Running plotting script..."
+echo "Running plotting script (may take some time)..."
 python plot.py
 echo
 
