@@ -12,8 +12,7 @@ for i in dt:
 	time.append(elapsed)
 rho = np.empty((10001,100))
 rad = np.empty((10001,101))
-u = np.empty((10001,101))
-vel = np.empty((10001,100))
+vel = np.empty((10001,101))
 
 pdat = open('P.dat','r')
 line = pdat.readline()
@@ -26,54 +25,49 @@ line = rdat.readline()
 for i in list(range(10000)):
 	rad[i] = line.split()
 	line = rdat.readline()
-udat = open('U.dat','r')
-line = udat.readline()
-for i in list(range(10000)):
-	u[i] = line.split()
-	line = udat.readline()
-vdat = open('V.dat','r')
+vdat = open('U.dat','r')
 line = vdat.readline()
 for i in list(range(10000)):
 	vel[i] = line.split()
 	line = vdat.readline()
 
-fig,(ax1,ax2,ax3) = plt.subplots(3,1)
-ax1.set_ylabel('velocity')
-ax2.set_ylabel('U')
-ax3.set_ylabel('density')
+fig,(ax1,ax2) = plt.subplots(2,1)
 
 ax1.set_xscale('log')
+#ax1.set_yscale('log')
+#ax2.set_yscale('log')
 ax2.set_xscale('log')
-ax3.set_xscale('log')
-line1, = ax1.plot([],[],lw=2)
-line2, = ax2.plot([],[],lw=2)
-line3, = ax3.plot([],[],lw=2)
+ax1.set_xlim(1e5,1e10)
+#ax1.set_ylim(-1e10,-1e7)
+#ax2.set_ylim(1e-18,1e-5)
+ax2.set_xlim(1e5,1e10)
+line1, = ax1.plot([],[])
+line2, = ax2.plot([],[])
 fig.suptitle('')
+
+n = 100
 
 def init():
 	line1.set_data([],[])
 	line2.set_data([],[])
-	line3.set_data([],[])
-	return line1, line2, line3,
+	return line1, line2,
 
 def animate(i):
-	i = i * 1000
+	i = i * n
 	print(i)
 	x = rad[i][:-1]
-	yVelo = vel[i]
-	yTemp = u[i][:-1]
+	yVelo = vel[i][:-1]
 	yDen = rho[i]
 	line1.set_data(x,yVelo)
-	line2.set_data(x,yTemp)
-	line3.set_data(x,yDen)
+	line2.set_data(x,yDen)
 	ax1.set_title('t = '+'{:.4f}'.format(time[i])+' s')
-	return line1, line2, line3,
+	return line1, line2,
 
 
-ani = animation.FuncAnimation(fig, animate, init_func=init, frames=int(len(time)/1000),interval=80,blit=False)
+ani = animation.FuncAnimation(fig, animate, init_func=init, frames=int(len(time)/n),interval=80,blit=False)
 
 print('saving it')
-ani.save('hydro_movie.gif', writer='ffmpeg', fps=10)
+ani.save('hydro_movie.mp4', writer='ffmpeg', fps=10)
 
 plt.show()
 plt.close()
