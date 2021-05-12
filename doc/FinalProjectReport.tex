@@ -294,10 +294,14 @@ reasons is a likely scenario that could cause the model to immediately begin to 
 expand, and the limitations of the simple difference equations within the hydrocode could
 not correctly capture the behavior of the star.
 
+We stopped here because we were stuck. We tried playing around with the initial parameters, K values, and looking for bugs. However, time ran out.
+
 If we had more time, or if this project were to continue, the next step in attempting to fix
 our unstable model would be to look closely at the interpolation, as well as how the boundary
 positions are calculated. This project was a great illustration of the importance
 of precise initial conditions.
+
+
 
 
 \appendix
@@ -337,7 +341,7 @@ When running the full program, the terminal output describes each step of the pr
 \end{figure}
 
 This program generates a few human-readable data files in an \texttt{output/} directory within the
-root directory. These output data files are then plotted and are the plots seen in the above figures.
+root directory. These output data files are then plotted and are the plots seen in the above figures. The data files are formatted so that the first line is the data across all cells for the first timestep, the second line the second timestep, etc. The figure are saved to doc/figs.
 
 \bibliography{bib}
 
