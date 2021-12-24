@@ -7,6 +7,7 @@
 
 #include "io.hpp"
 #include "Hydro.hpp"
+#include "LaneEmden.hpp"
 #include "constants.hpp"
 
 using namespace std;
@@ -129,5 +130,16 @@ namespace myHydro
         hydro.fileV << endl;
         hydro.fileP << endl;
         hydro.fileQ << endl;
+    }
+
+    void writeOutput(myHydro::LaneEmden &laneEmden)
+    {
+        double r, rho, P;
+
+        laneEmden.getRadius(r);
+        laneEmden.getDensity(rho);
+        laneEmden.getPressure(P, rho);
+
+        laneEmden.outFile << r << rho << P << endl;
     }
 }

@@ -3,6 +3,7 @@
 #include <vector>
 
 // #include "Hydro.hpp"
+#include "LaneEmden.hpp"
 
 namespace myHydro
 {
@@ -24,4 +25,5 @@ namespace myHydro
 
     void setOutputPrecision(myHydro::Hydro &hydro);
     void writeOutput(myHydro::Hydro &hydro);
+    void writeOutput(myHydro::LaneEmden &laneEmden);
 }

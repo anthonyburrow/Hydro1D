@@ -31,18 +31,6 @@ OBJ_LIST1 = $(addprefix $(BIN_DIR)/, $(_OBJ_LIST))
 $(TARGET1): $(OBJ_LIST1)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Target 2
-NAME2 = laneemden
-TARGET2 = $(BIN_DIR)/$(NAME2)
-_SRC1 = $(NAME2)
-SRC2 = $(_SRC1)
-
-_OBJ_LIST = $(addsuffix .o, $(SRC2))
-OBJ_LIST2 = $(addprefix $(BIN_DIR)/, $(_OBJ_LIST))
-
-$(TARGET2): $(OBJ_LIST2)
-	$(FC) $(FFLAGS) $^ -o $@
-
 # Object recipes
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -57,7 +45,7 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/%.h
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.f90
 	$(FC) $(FFLAGS) -c $< -o $@
 
-all: directories $(TARGET1) $(TARGET2)
+all: directories $(TARGET1)
 
 TESTS = $(TARGET1)
 

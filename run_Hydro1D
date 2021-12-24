@@ -4,11 +4,6 @@ mkdir -p ./doc/
 mkdir -p ./doc/figs/
 rm -r ./doc/figs/*
 
-echo "Calculating polytropic solution to Lane-Emden..."
-./bin/laneemden
-python ./src/fileToIP.py
-rm ./output/poly3
-echo
 
 echo "Interpolating Lane-Emden result..."
 python ./src/interpolate.py
