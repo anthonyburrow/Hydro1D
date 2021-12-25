@@ -17,6 +17,7 @@ namespace myHydro
         void solve();
 
         void getRadius(double &r);
+        void getInteriorMass(double &m);
         void getDensity(double &rho);
         void getPressure(double &P, const double &rho);
 
@@ -28,6 +29,7 @@ namespace myHydro
 
         double K;        // Polytropic proportionality
         double lambda;   // radius scale
+        double alpha;    // mass scale
 
         void calcK();
         void iterate();

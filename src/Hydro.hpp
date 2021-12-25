@@ -16,6 +16,7 @@ namespace myHydro
         int nIter;
         double totalMass;
         bool freeFall;
+        bool resetLaneEmden;
 
         int iter;
         double dt;
@@ -56,6 +57,7 @@ namespace myHydro
         void write();
 
     private:
-        void initVectors();
+        void initialize();
+        void calcHydrostatic();
     };
 }

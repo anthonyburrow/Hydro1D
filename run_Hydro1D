@@ -5,10 +5,6 @@ mkdir -p ./doc/figs/
 rm -r ./doc/figs/*
 
 
-echo "Interpolating Lane-Emden result..."
-python ./src/interpolate.py
-echo
-
 echo "Running Hydro1D..."
 ./bin/Hydro1D
 echo

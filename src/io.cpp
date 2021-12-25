@@ -63,6 +63,13 @@ namespace myHydro
                     cout << "  System in free-fall: ";
                     cout << boolalpha << freeFall << endl;
                     break;
+                case 5 :
+                    bool resetLaneEmden;
+                    iss >> resetLaneEmden;
+                    params.resetLaneEmden = resetLaneEmden;
+                    cout << "  Recalculate Lane-Emden solution: ";
+                    cout << boolalpha << resetLaneEmden << endl;
+                    break;
                 default :
                     cout << "Too many lines in param file" << endl;
             }
@@ -72,6 +79,12 @@ namespace myHydro
         paramFile.close();
 
         return params;
+    }
+
+    bool fileExists(const std::string &fileName)
+    {
+        ifstream infile(fileName);
+        return infile.good();
     }
 
     void readHydrostatic(myHydro::Hydro &hydro)
@@ -85,14 +98,14 @@ namespace myHydro
         hydro.R[0] = myHydro::zero;
 
         // mass, radius, density in cgs
-        double mass, rad, rho;
+        double rad, mass, rho;
         int i = 0;
-        while(initFile >> mass >> rad >> rho)
+        while(initFile >> rad >> mass >> rho)
         {
             hydro.R[i + 1] = rad;
             hydro.V[i] = 1.0 / rho;
 
-            ++i;
+            i++;
         }
     }
 
@@ -134,12 +147,12 @@ namespace myHydro
 
     void writeOutput(myHydro::LaneEmden &laneEmden)
     {
-        double r, rho, P;
+        double r, m, rho;
 
         laneEmden.getRadius(r);
+        laneEmden.getInteriorMass(m);
         laneEmden.getDensity(rho);
-        laneEmden.getPressure(P, rho);
 
-        laneEmden.outFile << r << rho << P << endl;
+        laneEmden.outFile << r << rho << endl;
     }
 }

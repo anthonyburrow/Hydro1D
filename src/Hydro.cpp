@@ -44,22 +44,22 @@ namespace myHydro
         nIter = params.nIter;
         totalMass = params.totalMass * myHydro::msol;
         freeFall = params.freeFall;
+        resetLaneEmden = params.resetLaneEmden;
 
         iter = 0;
 
         dt = params.initDt;
         dtht = params.initDt;   // half-time time interval
 
-        // Adjust output
+        // Setup
         myHydro::setOutputPrecision(*this);
 
-        // Setup
-        initVectors();
+        initialize();
     }
 
-    void Hydro::initVectors()
+    void Hydro::initialize()
     {
-        myHydro::readHydrostatic(*this);
+        calcHydrostatic();
 
         myHydro::calcDM(*this);
 
@@ -70,6 +70,19 @@ namespace myHydro
         myHydro::initQ(*this);
         myHydro::initT(*this);
         myHydro::calcP(*this);
+    }
+
+    void Hydro::calcHydrostatic()
+    {
+        // Create Lane Emden model
+        const int n = 3;
+        const string fileName = "./output/LESolution.dat";
+        const bool alreadyCalculated = fileExists(fileName);
+
+        myHydro::LaneEmden le(n, fileName);
+        if (!alreadyCalculated || resetLaneEmden) { le.solve(); }
+
+        // Interpolate LE solution
     }
 
     void Hydro::iterate()

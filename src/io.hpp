@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 
 // #include "Hydro.hpp"
@@ -17,11 +18,13 @@ namespace myHydro
         double nIter;
         double initDt;
         bool freeFall;
+        bool resetLaneEmden;
     };
 
     hydroParams readParams();
 
-    void readHydrostatic(myHydro::Hydro &hydro);
+    bool fileExists(const std::string &fileName);
+    void readLESolution(myHydro::Hydro &hydro);
 
     void setOutputPrecision(myHydro::Hydro &hydro);
     void writeOutput(myHydro::Hydro &hydro);

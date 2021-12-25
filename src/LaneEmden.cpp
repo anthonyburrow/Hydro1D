@@ -1,3 +1,4 @@
+#include <iostream>
 #include "LaneEmden.hpp"
 #include "io.hpp"
 #include "constants.hpp"
@@ -28,10 +29,13 @@ namespace myHydro
             (n + 1) * K * pow(myHydro::rhoC, ((1 - n) / n)) /
             (myHydro::pi4 * myHydro::G)
         );
+        alpha = -myHydro::pi4 * pow(lambda, 3) * myHydro::rhoC;
     }
 
     void LaneEmden::solve()
     {
+        cout << "Calculating Lane-Emden solution..." << endl;
+
         int iter = 0;
         while (iter < maxIter && 0.0 < x)
         {
@@ -45,6 +49,11 @@ namespace myHydro
     void LaneEmden::getRadius(double &r)
     {
         r = lambda * t;
+    }
+
+    void LaneEmden::getInteriorMass(double &m)
+    {
+        m = alpha * pow(t, 2) * dxdt;
     }
 
     void LaneEmden::getDensity(double &rho)

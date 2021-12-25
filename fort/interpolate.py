@@ -8,7 +8,7 @@ rhoc = 1e7
 
 
 # Read Lane-Emden output
-fn = './fort/data_cell_centered.txt'
+fn = './output/data_cell_centered.txt'
 data = np.loadtxt(fn, skiprows=1)
 
 data = data[:data[:, 0].argmax() + 1]   # correct for decreasing int. mass
@@ -31,6 +31,7 @@ total_mass = lines[2] * msol
 dm = total_mass / n_zones
 
 print('  Number of zones: %i' % n_zones)
+print('  Total mass: %.1f m_sol' % lines[2])
 
 # Fit output
 params = np.polyfit(m_int / total_mass, density / rhoc, 10)
@@ -50,7 +51,7 @@ for i in range(n_zones):
 
     prev_R_cube = new_R_cube
 
-fn = './fort/hydro_input.txt'
+fn = './output/hydro_input.txt'
 np.savetxt(fn, output, fmt=['%.12e', '%.12e', '%.12e'])
 
 # Plot fit
@@ -65,5 +66,5 @@ ax.set_ylabel('zone density')
 ax.set_xlim(left=0)
 ax.set_ylim(0, rhoc)
 
-fn = './fort/rho_mass.pdf'
+fn = './doc/figs/rho_mass.pdf'
 fig.savefig(fn, dpi=200)
