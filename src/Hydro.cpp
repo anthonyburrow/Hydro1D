@@ -43,7 +43,7 @@ namespace myHydro
         nZones = params.nZones;
         nBoundaries = nZones + 1;
         nIter = params.nIter;
-        totalMass = params.totalMass * myHydro::msol;
+        totalMass = params.totalMass * msol;
         freeFall = params.freeFall;
         resetLaneEmden = params.resetLaneEmden;
 
@@ -86,13 +86,25 @@ namespace myHydro
         readLESolution(mass, density, fileName);
 
         TwoPointPowerLaw interp(mass, density);
-        interp.predict(V, XM);
+
+        vector<double> massPredict(V.size());
+        for (int i = 0; i < massPredict.size(); i++)
+        {
+            massPredict[i] = 0.5 * (XM[i] + XM[i + 1]);
+        }
+        interp.predict(V, massPredict);
+
+        double prevRCube = 0.0;
+        double newRCube;
         for (int i = 0; i < V.size(); i++)
         {
             V[i] = 1.0 / V[i];   // transform density to specific volume
-        }
 
-        // Get R values that contain equal masses with given densities
+            newRCube = prevRCube + DM * V[i] / pi4_3;
+            R[i] = cbrt(newRCube);
+
+            prevRCube = newRCube;
+        }
     }
 
     void Hydro::iterate()
