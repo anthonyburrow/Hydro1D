@@ -7,6 +7,7 @@
 #include "initialize.hpp"
 #include "physics.hpp"
 #include "constants.hpp"
+#include "interpolate.hpp"
 
 using namespace std;
 
@@ -59,13 +60,11 @@ namespace myHydro
 
     void Hydro::initialize()
     {
+        myHydro::calcDM(*this);
+        myHydro::calcXM(*this);
         calcHydrostatic();
 
-        myHydro::calcDM(*this);
-
         myHydro::initU(*this);
-
-        myHydro::calcXM(*this);   // can either read or calculate
 
         myHydro::initQ(*this);
         myHydro::initT(*this);
@@ -82,7 +81,18 @@ namespace myHydro
         myHydro::LaneEmden le(n, fileName);
         if (!alreadyCalculated || resetLaneEmden) { le.solve(); }
 
-        // Interpolate LE solution
+        // Interpolate LE solution to get density
+        vector<double> mass, density;
+        readLESolution(mass, density, fileName);
+
+        TwoPointPowerLaw interp(mass, density);
+        interp.predict(V, XM);
+        for (int i = 0; i < V.size(); i++)
+        {
+            V[i] = 1.0 / V[i];   // transform density to specific volume
+        }
+
+        // Get R values that contain equal masses with given densities
     }
 
     void Hydro::iterate()

@@ -1,15 +1,25 @@
 #pragma once
 
+#include <vector>
+
 namespace myHydro
 {
     class TwoPointPowerLaw
     {
     public:
-        double a = 0.0;
-        double b = 1.0;
+        TwoPointPowerLaw::TwoPointPowerLaw(const vector<double> &xData,
+                                           const vector<double> &yData);
 
-        void fit(const double &x1, const double &y1,
-                 const double &x2, const double &y2);
+        void predict(std::vector<double> &y, const std::vector<double> &x);
         void predict(double &y, const double &x);
+    
+    private:
+        std::vector<double> a;
+        std::vector<double> b;
+
+        const std::vector<double> &xData;
+        const std::vector<double> &yData;
+
+        void calcParams(const int &index);
     };
 }

@@ -81,34 +81,6 @@ namespace myHydro
         return params;
     }
 
-    bool fileExists(const std::string &fileName)
-    {
-        ifstream infile(fileName);
-        return infile.good();
-    }
-
-    void readHydrostatic(myHydro::Hydro &hydro)
-    {
-        string filename = "./output/hydro_input.txt";
-        cout << "Setting initial conditions from: " << filename << endl;
-
-        ifstream initFile(filename);
-        string line;
-
-        hydro.R[0] = myHydro::zero;
-
-        // mass, radius, density in cgs
-        double rad, mass, rho;
-        int i = 0;
-        while(initFile >> rad >> mass >> rho)
-        {
-            hydro.R[i + 1] = rad;
-            hydro.V[i] = 1.0 / rho;
-
-            i++;
-        }
-    }
-
     void setOutputPrecision(myHydro::Hydro &hydro)
     {
         const int n_digits = numeric_limits<double>::max_digits10;
@@ -120,6 +92,63 @@ namespace myHydro
         hydro.fileP << setprecision(n_digits);
         hydro.fileQ << setprecision(n_digits);
     }
+
+    bool fileExists(const string &fileName)
+    {
+        ifstream infile(fileName);
+        return infile.good();
+    }
+
+    void writeLESolution(myHydro::LaneEmden &laneEmden)
+    {
+        double r, m, rho;
+
+        laneEmden.getRadius(r);
+        laneEmden.getInteriorMass(m);
+        laneEmden.getDensity(rho);
+
+        laneEmden.outFile << r << rho << endl;
+    }
+
+    void readLESolution(vector<double> &mass, vector<double> &density,
+                        const string &fileName)
+    {
+        std::ifstream file(fileName);
+
+        int r, m, rho;
+        while (file >> m >> rho)
+        {
+            mass.push_back(m);
+            density.push_back(rho);
+        }
+    }
+
+    void writeHydrostatic(const string &fileName)
+    {
+
+    }
+
+    // void readLESolution(myHydro::Hydro &hydro)
+    // {
+    //     string filename = "./output/hydro_input.txt";
+    //     cout << "Setting initial conditions from: " << filename << endl;
+
+    //     ifstream initFile(filename);
+    //     string line;
+
+    //     hydro.R[0] = myHydro::zero;
+
+    //     // mass, radius, density in cgs
+    //     double rad, mass, rho;
+    //     int i = 0;
+    //     while(initFile >> rad >> mass >> rho)
+    //     {
+    //         hydro.R[i + 1] = rad;
+    //         hydro.V[i] = 1.0 / rho;
+
+    //         i++;
+    //     }
+    // }
 
     void writeOutput(myHydro::Hydro &hydro)
     {
@@ -143,16 +172,5 @@ namespace myHydro
         hydro.fileV << endl;
         hydro.fileP << endl;
         hydro.fileQ << endl;
-    }
-
-    void writeOutput(myHydro::LaneEmden &laneEmden)
-    {
-        double r, m, rho;
-
-        laneEmden.getRadius(r);
-        laneEmden.getInteriorMass(m);
-        laneEmden.getDensity(rho);
-
-        laneEmden.outFile << r << rho << endl;
     }
 }

@@ -40,7 +40,7 @@ namespace myHydro
         while (iter < maxIter && 0.0 < x)
         {
             iterate();
-            writeOutput(*this);
+            writeLESolution(*this);
 
             iter++;
         }

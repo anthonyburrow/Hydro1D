@@ -23,10 +23,13 @@ namespace myHydro
 
     hydroParams readParams();
 
-    bool fileExists(const std::string &fileName);
-    void readLESolution(myHydro::Hydro &hydro);
-
     void setOutputPrecision(myHydro::Hydro &hydro);
+    bool fileExists(const std::string &fileName);
+
+    void writeLESolution(myHydro::LaneEmden &laneEmden);
+    void readLESolution(std::vector<double> &xData, std::vector<double> &yData,
+                        const std::string &fileName);
+    void writeHydrostatic();
+
     void writeOutput(myHydro::Hydro &hydro);
-    void writeOutput(myHydro::LaneEmden &laneEmden);
 }
