@@ -7,7 +7,8 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    myHydro::hydroParams params = myHydro::readParams();
+    string fileName = "./config/params";
+    myHydro::hydroParams params = myHydro::readParams(fileName);
     myHydro::Hydro hydro(params);
 
     // hydro.write();

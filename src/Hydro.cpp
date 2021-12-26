@@ -75,15 +75,15 @@ namespace myHydro
     {
         // Create Lane Emden model
         const int n = 3;
-        const string fileName = "./output/LESolution.dat";
-        const bool alreadyCalculated = fileExists(fileName);
+        const string inFileName = "./output/LESolution.dat";
+        const bool alreadyCalculated = fileExists(inFileName);
 
-        myHydro::LaneEmden le(n, fileName);
+        myHydro::LaneEmden le(n, inFileName);
         if (!alreadyCalculated || resetLaneEmden) { le.solve(); }
 
         // Interpolate LE solution to get density
         vector<double> mass, density;
-        readLESolution(mass, density, fileName);
+        readLESolution(mass, density, inFileName);
 
         TwoPointPowerLaw interp(mass, density);
 
@@ -105,6 +105,9 @@ namespace myHydro
 
             prevRCube = newRCube;
         }
+
+        const string outFileName = "./output/Hydrostatic.dat";
+        writeHydrostatic(R, massPredict, V, outFileName);
     }
 
     void Hydro::iterate()

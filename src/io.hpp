@@ -21,15 +21,18 @@ namespace myHydro
         bool resetLaneEmden;
     };
 
-    hydroParams readParams();
+    hydroParams readParams(const std::string &fileName);
 
     void setOutputPrecision(myHydro::Hydro &hydro);
     bool fileExists(const std::string &fileName);
 
     void writeLESolution(myHydro::LaneEmden &laneEmden);
-    void readLESolution(std::vector<double> &xData, std::vector<double> &yData,
+    void readLESolution(std::vector<double> &mass, std::vector<double> &density,
                         const std::string &fileName);
-    void writeHydrostatic();
+    void writeHydrostatic(const vector<double> &r,
+                          const vector<double> &m,
+                          const vector<double> &rho,
+                          const string &fileName);
 
     void writeOutput(myHydro::Hydro &hydro);
 }

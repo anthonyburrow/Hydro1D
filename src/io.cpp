@@ -14,12 +14,11 @@ using namespace std;
 
 namespace myHydro
 {
-    myHydro::hydroParams readParams()
+    myHydro::hydroParams readParams(const string &fileName)
     {
-        string filename = "./config/params";
-        cout << "Reading from parameter file: " << filename << endl;
+        cout << "Reading from parameter file: " << fileName << endl;
 
-        ifstream paramFile(filename);
+        ifstream paramFile(fileName);
         string line;
         myHydro::hydroParams params;
 
@@ -123,32 +122,18 @@ namespace myHydro
         }
     }
 
-    void writeHydrostatic(const string &fileName)
+    void writeHydrostatic(const vector<double> &r,
+                          const vector<double> &m,
+                          const vector<double> &rho,
+                          const string &fileName)
     {
+        ofstream outFile(fileName);
 
+        for (int i = 0; i < m.size(); i++)
+        {
+            outFile << r[i + 1] << " " << m[i] << " " << rho[i] << endl;
+        }
     }
-
-    // void readLESolution(myHydro::Hydro &hydro)
-    // {
-    //     string filename = "./output/hydro_input.txt";
-    //     cout << "Setting initial conditions from: " << filename << endl;
-
-    //     ifstream initFile(filename);
-    //     string line;
-
-    //     hydro.R[0] = myHydro::zero;
-
-    //     // mass, radius, density in cgs
-    //     double rad, mass, rho;
-    //     int i = 0;
-    //     while(initFile >> rad >> mass >> rho)
-    //     {
-    //         hydro.R[i + 1] = rad;
-    //         hydro.V[i] = 1.0 / rho;
-
-    //         i++;
-    //     }
-    // }
 
     void writeOutput(myHydro::Hydro &hydro)
     {
