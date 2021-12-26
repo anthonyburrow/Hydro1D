@@ -9,7 +9,8 @@ echo "Running Hydro1D..."
 ./bin/Hydro1D
 echo
 
-echo "Running plotting script..."
+echo "Running plotting scripts..."
+python src/plot/plot_hydrostatic.py
 python src/plot/plot_output.py
 echo
 

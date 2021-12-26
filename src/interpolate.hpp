@@ -2,13 +2,15 @@
 
 #include <vector>
 
+#include "interpolate.hpp"
+
 namespace myHydro
 {
     class TwoPointPowerLaw
     {
     public:
-        TwoPointPowerLaw::TwoPointPowerLaw(const vector<double> &xData,
-                                           const vector<double> &yData);
+        TwoPointPowerLaw(const std::vector<double> &xData,
+                         const std::vector<double> &yData);
 
         void predict(std::vector<double> &y, const std::vector<double> &x);
         void predict(double &y, const double &x);
@@ -17,8 +19,8 @@ namespace myHydro
         std::vector<double> a;
         std::vector<double> b;
 
-        const std::vector<double> &xData;
-        const std::vector<double> &yData;
+        std::vector<double> xData;
+        std::vector<double> yData;
 
         void calcParams(const int &index);
     };

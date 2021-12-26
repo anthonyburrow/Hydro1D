@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+
 #include "LaneEmden.hpp"
 #include "io.hpp"
 #include "constants.hpp"
@@ -7,12 +9,11 @@ using namespace std;
 
 namespace myHydro
 {
-    LaneEmden::LaneEmden(const int &polyIndex, const string &filename,
-                         const double &stepSize, const int &maxIter)
+    LaneEmden::LaneEmden(const int &polyIndex, const double &stepSize,
+                         const int &maxIter)
       :
         n(polyIndex),
-        maxIter(maxIter),
-        outFile(filename)
+        maxIter(maxIter)
     {
         if (polyIndex > 5 || 0 > polyIndex)
         {
@@ -32,15 +33,17 @@ namespace myHydro
         alpha = -myHydro::pi4 * pow(lambda, 3) * myHydro::rhoC;
     }
 
-    void LaneEmden::solve()
+    void LaneEmden::solve(const string &fileName)
     {
         cout << "Calculating Lane-Emden solution..." << endl;
+
+        ofstream outFile(fileName);
 
         int iter = 0;
         while (iter < maxIter && 0.0 < x)
         {
             iterate();
-            writeLESolution(*this);
+            writeLESolution(*this, outFile);
 
             iter++;
         }
@@ -59,6 +62,8 @@ namespace myHydro
     void LaneEmden::getDensity(double &rho)
     {
         rho = myHydro::rhoC * pow(x, n);
+
+        if (rho < 0.0) { rho = zero; }
     }
 
     void LaneEmden::getPressure(double &P, const double &rho)

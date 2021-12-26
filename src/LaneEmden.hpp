@@ -1,6 +1,6 @@
 #pragma once
 
-#include <fstream>
+#include <string>
 
 namespace myHydro
 {
@@ -9,12 +9,11 @@ namespace myHydro
     public:
         const int n;
         const int maxIter;
-        std::ofstream outFile;
 
-        LaneEmden(const int &polyIndex, const std::string &file,
-                  const double &stepSize = 0.001, const int &maxIter = 10000);
+        LaneEmden(const int &polyIndex, const double &stepSize = 0.001,
+                  const int &maxIter = 10000);
 
-        void solve();
+        void solve(const std::string &fileName);
 
         void getRadius(double &r);
         void getInteriorMass(double &m);

@@ -1,25 +1,29 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+
 #include "interpolate.hpp"
 
 using namespace std;
 
 namespace myHydro
 {
-    TwoPointPowerLaw::TwoPointPowerLaw(const vector<double> &xData,
-                                       const vector<double> &yData)
+    TwoPointPowerLaw::TwoPointPowerLaw(const vector<double> &x,
+                                       const vector<double> &y)
     :
-    a(xData.size() - 1),
-    b(xData.size() - 1),
-    xData(xData),
-    yData(yData)
+    a(x.size() - 1),
+    b(x.size() - 1),
+    xData(x.size()),
+    yData(x.size())
     {
         for (int i = 0; i < a.size(); i++)
         {
             a[i] = 0.0;
             b[i] = 1.0;
         }
+
+        xData = x;
+        yData = y;
     }
 
     void TwoPointPowerLaw::predict(vector<double> &y, const vector<double> &x)

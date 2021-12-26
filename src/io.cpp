@@ -94,11 +94,11 @@ namespace myHydro
 
     bool fileExists(const string &fileName)
     {
-        ifstream infile(fileName);
-        return infile.good();
+        ifstream inFile(fileName);
+        return inFile.good();
     }
 
-    void writeLESolution(myHydro::LaneEmden &laneEmden)
+    void writeLESolution(myHydro::LaneEmden &laneEmden, ofstream &outFile)
     {
         double r, m, rho;
 
@@ -106,16 +106,16 @@ namespace myHydro
         laneEmden.getInteriorMass(m);
         laneEmden.getDensity(rho);
 
-        laneEmden.outFile << r << rho << endl;
+        outFile << r << " " << rho << endl;
     }
 
     void readLESolution(vector<double> &mass, vector<double> &density,
                         const string &fileName)
     {
-        std::ifstream file(fileName);
+        std::ifstream inFile(fileName);
 
-        int r, m, rho;
-        while (file >> m >> rho)
+        double r, m, rho;
+        while (inFile >> m >> rho)
         {
             mass.push_back(m);
             density.push_back(rho);

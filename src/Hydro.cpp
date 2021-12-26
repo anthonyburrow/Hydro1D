@@ -77,12 +77,13 @@ namespace myHydro
         const int n = 3;
         const string inFileName = "./output/LESolution.dat";
         const bool alreadyCalculated = fileExists(inFileName);
+        // const bool alreadyCalculated = true;
 
-        myHydro::LaneEmden le(n, inFileName);
-        if (!alreadyCalculated || resetLaneEmden) { le.solve(); }
+        myHydro::LaneEmden le(n);
+        if (!alreadyCalculated || resetLaneEmden) { le.solve(inFileName); }
 
         // Interpolate LE solution to get density
-        vector<double> mass, density;
+        vector<double> mass(6901), density(6901);
         readLESolution(mass, density, inFileName);
 
         TwoPointPowerLaw interp(mass, density);

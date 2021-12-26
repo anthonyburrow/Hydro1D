@@ -22,7 +22,7 @@ $(MAKE_DIRS):
 NAME1 = Hydro1D
 TARGET1 = $(BIN_DIR)/$(NAME1)
 _SRC1 = $(NAME1)
-_SRC2 = Hydro initialize physics io
+_SRC2 = Hydro initialize physics io interpolate LaneEmden
 SRC1 = $(_SRC1) $(_SRC2)
 
 _OBJ_LIST = $(addsuffix .o, $(SRC1))
@@ -39,11 +39,11 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(DIR_GUARD)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/%.h
-	$(CC) $(CCFLAGS) -c $< -o $@
+# $(BIN_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/%.h
+# 	$(CC) $(CCFLAGS) -c $< -o $@
 
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.f90
-	$(FC) $(FFLAGS) -c $< -o $@
+# $(BIN_DIR)/%.o: $(SRC_DIR)/%.f90
+# 	$(FC) $(FFLAGS) -c $< -o $@
 
 all: directories $(TARGET1)
 

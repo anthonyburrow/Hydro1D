@@ -26,13 +26,14 @@ namespace myHydro
     void setOutputPrecision(myHydro::Hydro &hydro);
     bool fileExists(const std::string &fileName);
 
-    void writeLESolution(myHydro::LaneEmden &laneEmden);
+    void writeLESolution(myHydro::LaneEmden &laneEmden,
+                         std::ofstream &outFile);
     void readLESolution(std::vector<double> &mass, std::vector<double> &density,
                         const std::string &fileName);
-    void writeHydrostatic(const vector<double> &r,
-                          const vector<double> &m,
-                          const vector<double> &rho,
-                          const string &fileName);
+    void writeHydrostatic(const std::vector<double> &r,
+                          const std::vector<double> &m,
+                          const std::vector<double> &rho,
+                          const std::string &fileName);
 
     void writeOutput(myHydro::Hydro &hydro);
 }
