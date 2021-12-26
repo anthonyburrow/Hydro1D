@@ -10,7 +10,7 @@ echo "Running Hydro1D..."
 echo
 
 echo "Running plotting script..."
-python plot.py
+python src/plot/plot_output.py
 echo
 
 echo "Complete."
