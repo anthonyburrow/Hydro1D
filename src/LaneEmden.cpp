@@ -13,6 +13,7 @@ namespace myHydro
                          const int &maxIter)
       :
         n(polyIndex),
+        dXi(stepSize),
         maxIter(maxIter)
     {
         if (polyIndex > 5 || 0 > polyIndex)
@@ -20,17 +21,16 @@ namespace myHydro
             throw invalid_argument("Polytropic index must be between 0 and 5.");
         }
 
-        t = myHydro::zero;
-        x = 1.0;
-        dxdt = myHydro::zero;
-        dt = stepSize;
+        xi = myHydro::zero;
+        theta = 1.0;
+        dThetaDXi = myHydro::zero;
 
         calcK();
-        lambda = sqrt(
+        alpha = sqrt(
             (n + 1) * K * pow(myHydro::rhoC, ((1 - n) / n)) /
             (myHydro::pi4 * myHydro::G)
         );
-        alpha = -myHydro::pi4 * pow(lambda, 3) * myHydro::rhoC;
+        lambda = -myHydro::pi4 * pow(alpha, 3) * myHydro::rhoC;
     }
 
     void LaneEmden::solve(const string &fileName)
@@ -40,7 +40,7 @@ namespace myHydro
         ofstream outFile(fileName);
 
         int iter = 0;
-        while (iter < maxIter && 0.0 < x)
+        while (iter < maxIter && theta > 0.0)
         {
             iterate();
             writeLESolution(*this, outFile);
@@ -51,35 +51,24 @@ namespace myHydro
 
     void LaneEmden::getRadius(double &r)
     {
-        r = lambda * t;
+        r = alpha * xi;
     }
 
     void LaneEmden::getInteriorMass(double &m)
     {
-        m = alpha * pow(t, 2) * dxdt;
+        m = lambda * pow(xi, 2) * dThetaDXi;
     }
 
     void LaneEmden::getDensity(double &rho)
     {
-        rho = myHydro::rhoC * pow(x, n);
+        rho = myHydro::rhoC * pow(theta, n);
 
         if (rho < 0.0) { rho = zero; }
     }
 
     void LaneEmden::getPressure(double &P, const double &rho)
     {
-        double K;
-
-        switch(n)
-        {
-            case 3:
-                K = myHydro::K3;
-                break;
-            default:
-                K = myHydro::zero;
-        }
-
-        P = K * pow(rho, n);
+        P = K * pow(rho, 1.0 + 1.0 / n);
     }
 
     void LaneEmden::calcK()
@@ -96,8 +85,8 @@ namespace myHydro
 
     void LaneEmden::iterate()
     {
-        dxdt = dxdt - (2.0 * dxdt / t + pow(x, n)) * dt;
-        x = x + dxdt * dt;
-        t = t + dt;
+        dThetaDXi = dThetaDXi - (2.0 * dThetaDXi / xi + pow(theta, n)) * dXi;
+        theta = theta + dThetaDXi * dXi;
+        xi = xi + dXi;
     }
 }

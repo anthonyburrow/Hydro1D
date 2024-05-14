@@ -74,15 +74,16 @@ namespace myHydro
     void Hydro::calcHydrostatic()
     {
         // Create Lane Emden model
-        const int n = 3;
         const string inFileName = "./output/LESolution.dat";
         const bool alreadyCalculated = fileExists(inFileName);
-        // const bool alreadyCalculated = true;
 
-        myHydro::LaneEmden le(n);
-        if (!alreadyCalculated || resetLaneEmden) { le.solve(inFileName); }
+        myHydro::LaneEmden laneEmden;
+        if (!alreadyCalculated || resetLaneEmden) {
+            laneEmden.solve(inFileName);
+        }
 
         // Interpolate LE solution to get density
+        // TODO: Automate detecting size of input LE data
         vector<double> mass(6901), density(6901);
         readLESolution(mass, density, inFileName);
 
@@ -97,12 +98,13 @@ namespace myHydro
 
         double prevRCube = 0.0;
         double newRCube;
+        R[0] = 0.0;
         for (int i = 0; i < V.size(); i++)
         {
             V[i] = 1.0 / V[i];   // transform density to specific volume
 
             newRCube = prevRCube + DM * V[i] / pi4_3;
-            R[i] = cbrt(newRCube);
+            R[i + 1] = cbrt(newRCube);
 
             prevRCube = newRCube;
         }

@@ -26,7 +26,6 @@ namespace myHydro
         {
             hydro.XM[i + 1] = hydro.XM[i] + hydro.DM;
         }
-        // cout << hydro.XM[hydro.nZones] / 1.989e33 << " m_sol" << endl;
     }
 
     void calcR(myHydro::Hydro &hydro)

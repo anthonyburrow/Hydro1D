@@ -106,7 +106,7 @@ namespace myHydro
         laneEmden.getInteriorMass(m);
         laneEmden.getDensity(rho);
 
-        outFile << r << " " << rho << endl;
+        outFile << r << " " << m << " " << rho << endl;
     }
 
     void readLESolution(vector<double> &mass, vector<double> &density,
@@ -115,7 +115,7 @@ namespace myHydro
         std::ifstream inFile(fileName);
 
         double r, m, rho;
-        while (inFile >> m >> rho)
+        while (inFile >> r >> m >> rho)
         {
             mass.push_back(m);
             density.push_back(rho);
@@ -124,14 +124,14 @@ namespace myHydro
 
     void writeHydrostatic(const vector<double> &r,
                           const vector<double> &m,
-                          const vector<double> &rho,
+                          const vector<double> &V,
                           const string &fileName)
     {
         ofstream outFile(fileName);
 
         for (int i = 0; i < m.size(); i++)
         {
-            outFile << r[i + 1] << " " << m[i] << " " << rho[i] << endl;
+            outFile << r[i + 1] << " " << m[i] << " " << 1.0 / V[i] << endl;
         }
     }
 

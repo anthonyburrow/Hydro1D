@@ -10,7 +10,8 @@ namespace myHydro
         const int n;
         const int maxIter;
 
-        LaneEmden(const int &polyIndex, const double &stepSize = 0.001,
+        LaneEmden(const int &polyIndex = 3,
+                  const double &stepSize = 0.001,
                   const int &maxIter = 10000);
 
         void solve(const std::string &fileName);
@@ -21,14 +22,14 @@ namespace myHydro
         void getPressure(double &P, const double &rho);
 
     private:
-        double t;        // dimensionless diff. eq. variables
-        double x;
-        double dxdt;
-        double dt;
+        double xi;        // dimensionless diff. eq. variables
+        double theta;
+        double dThetaDXi;
+        const double dXi;
 
-        double K;        // Polytropic proportionality
-        double lambda;   // radius scale
-        double alpha;    // mass scale
+        double K;         // Polytropic proportionality
+        double alpha;     // radius scale
+        double lambda;    // mass scale
 
         void calcK();
         void iterate();

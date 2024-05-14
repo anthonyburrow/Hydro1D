@@ -32,7 +32,7 @@ namespace myHydro
                         const std::string &fileName);
     void writeHydrostatic(const std::vector<double> &r,
                           const std::vector<double> &m,
-                          const std::vector<double> &rho,
+                          const std::vector<double> &V,
                           const std::string &fileName);
 
     void writeOutput(myHydro::Hydro &hydro);
