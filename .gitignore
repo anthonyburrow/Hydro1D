@@ -12,3 +12,4 @@ fort/*.txt
 doc/figs/*
 
 .vscode
+.venv

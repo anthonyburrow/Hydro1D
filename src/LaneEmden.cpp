@@ -23,11 +23,11 @@ namespace myHydro
 
         xi = myHydro::zero;
         theta = 1.0;
-        dThetaDXi = myHydro::zero;
+        dThetaDXi = -myHydro::zero;
 
         calcK();
         alpha = sqrt(
-            (n + 1) * K * pow(myHydro::rhoC, ((1 - n) / n)) /
+            (n + 1) * K * pow(myHydro::rhoC, 1.0 / n - 1.0) /
             (myHydro::pi4 * myHydro::G)
         );
         lambda = -myHydro::pi4 * pow(alpha, 3) * myHydro::rhoC;

@@ -15,4 +15,4 @@
 
 # Recalculate Lane-Emden solution if previous calculation
 # doesn't exist (1 = true, 0 = false)
-0
+1

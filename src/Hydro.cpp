@@ -83,8 +83,7 @@ namespace myHydro
         }
 
         // Interpolate LE solution to get density
-        // TODO: Automate detecting size of input LE data
-        vector<double> mass(6901), density(6901);
+        vector<double> mass, density;
         readLESolution(mass, density, inFileName);
 
         TwoPointPowerLaw interp(mass, density);

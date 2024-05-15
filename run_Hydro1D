@@ -10,8 +10,10 @@ echo "Running Hydro1D..."
 echo
 
 echo "Running plotting scripts..."
+source .venv/bin/activate
 python src/plot/plot_hydrostatic.py
 python src/plot/plot_output.py
+deactivate
 echo
 
 echo "Complete."

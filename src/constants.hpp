@@ -23,7 +23,8 @@ namespace myHydro
     static const double rhoNuc = 2.3e14;                 // g cm^-3
 
     // Central density (at t = 0)
-    static const double rhoC = 1.0e7;                    // g cm^-3
+    // static const double rhoC = 1.0e7;                    // g cm^-3
+    static const double rhoC = 7.66e4 * 1e3 * 1e-6;         // g cm^-3
 
     // Polytropic (gamma = 4/3) pressure constant for 10 m_sol
     // static const double K4_3 = 1.2e15;                // cgs
@@ -36,5 +37,6 @@ namespace myHydro
     const double K0 = 140.0 * 1.60218e-6;                // erg
     const double gamma = 3.0;
 
-    static const double K3 = K0 / (9.0 * gamma * pow(rhoNuc, 2.0) * m_n);
+    // static const double K3 = K0 / (9.0 * gamma * pow(rhoNuc, 2.0) * m_n);
+    static const double K3 = 3.85e10 * 100.0 / 1e-5 / 1e3;
 }
