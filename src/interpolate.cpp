@@ -36,7 +36,7 @@ namespace myHydro
 
     void TwoPointPowerLaw::predict(double &y, const double &x)
     {
-        if (x < xData[0] || x > xData[-1])
+        if (x < xData[0] || x > xData.back())
         {
             cout << "Can't interpolate outside of bounds." << endl;
             return;
