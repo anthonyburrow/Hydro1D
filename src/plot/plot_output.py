@@ -26,9 +26,9 @@ fig, ax = plt.subplots(dpi=150)
 ax.plot(time, data_R, 'o-', color='k', markersize=2)
 
 ax.set_xlabel('time [sec]')
-ax.set_ylabel('R [cm]')
+ax.set_ylabel(r'R [R$_\odot$]')
 
-ax.set_yscale('log')
+# ax.set_yscale('log')
 
 fn = '%s/R_time.pdf' % _fig_dir
 fig.savefig(fn, format='pdf', dpi=150)
@@ -45,11 +45,11 @@ fig, ax = plt.subplots(dpi=150)
 
 ax.plot(data_rho, data_P, 'o-', color='k', markersize=2)
 
-ax.set_xlabel(r'$\mathrm{\rho\ [g\ cm^{-3}]}$')
-ax.set_ylabel(r'$\mathrm{P\ [dynes\ cm^{-2}]}$')
+ax.set_xlabel(r'$\mathrm{\rho\ [M_\odot\ R_\odot^{-3}]}$')
+ax.set_ylabel(r'$\mathrm{P\ [M_\odot\ R_\odot^{-1}\ s^2]}$')
 
-ax.set_xscale('log')
-ax.set_yscale('log')
+# ax.set_xscale('log')
+# ax.set_yscale('log')
 
 fn = '%s/P_rho.pdf' % _fig_dir
 fig.savefig(fn, format='pdf', dpi=150)
@@ -86,13 +86,14 @@ fig, ax = plt.subplots()
 
 line, = ax.plot([], [], 'o-', color='k', markersize=2)
 
-ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
-ax.set_ylabel(r'$\mathrm{Velocity\ [cm\ s^{-1}]}$')
+ax.set_xlabel(r'$\mathrm{R\ [R_\odot]}$')
+ax.set_ylabel(r'$\mathrm{Velocity\ [R\odot\ s^{-1}]}$')
 
-ax.set_xlim(1e5, 2.95e10)
-ax.set_ylim(-1e11, 1e10)
+ax.set_xlim(0., 1.)
+ymax = np.abs(data_U).max(axis=None) * 1.05
+ax.set_ylim(-ymax, ymax)
 
-ax.set_xscale('log')
+# ax.set_xscale('log')
 
 title = ax.set_title('')
 
@@ -130,13 +131,13 @@ fig, ax = plt.subplots()
 
 line, = ax.plot([], [], 'o-', color='k', markersize=2)
 
-ax.set_xlabel(r'$\mathrm{R\ [cm]}$')
+ax.set_xlabel(r'$\mathrm{R\ [R_\odot]}$')
 ax.set_ylabel(r'$\mathrm{Q\ /\ P}$')
 
-ax.set_xlim(1e5, 2.95e10)
+ax.set_xlim(0., 1.)
 ax.set_ylim(-1e-4, 5)
 
-ax.set_xscale('log')
+# ax.set_xscale('log')
 
 title = ax.set_title('')
 

@@ -43,7 +43,7 @@ namespace myHydro
         nZones = params.nZones;
         nBoundaries = nZones + 1;
         nIter = params.nIter;
-        totalMass = params.totalMass * msol;
+        totalMass = params.totalMass;
         freeFall = params.freeFall;
         resetLaneEmden = params.resetLaneEmden;
 
@@ -85,17 +85,15 @@ namespace myHydro
         // Interpolate LE solution to get density
         vector<double> mass, density;
         readLESolution(mass, density, inFileName);
-        for (int i = 0; i < mass.size(); i++) { mass[i] /= msol; }
 
         TwoPointPowerLaw interp(mass, density);
 
         vector<double> massPredict(V.size());
         for (int i = 0; i < massPredict.size(); i++)
         {
-            massPredict[i] = 0.5 * (XM[i] + XM[i + 1]) / msol;
+            massPredict[i] = 0.5 * (XM[i] + XM[i + 1]);
         }
         interp.predict(V, massPredict);
-        for (int i = 0; i < massPredict.size(); i++) { massPredict[i] *= msol; }
 
         double prevRCube = 0.0;
         double newRCube;

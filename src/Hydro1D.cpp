@@ -11,14 +11,14 @@ int main(int argc, char* argv[])
     myHydro::hydroParams params = myHydro::readParams(fileName);
     myHydro::Hydro hydro(params);
 
-    // hydro.write();
+    hydro.write();
 
-    // cout << "Calculating each iteration..." << endl ;
-    // while (hydro.iter < hydro.nIter)
-    // {
-    //     hydro.iterate();
-    //     hydro.write();
-    // }
+    cout << "Calculating each iteration..." << endl ;
+    while (hydro.iter < hydro.nIter)
+    {
+        hydro.iterate();
+        hydro.write();
+    }
 
     cout << "Complete." << endl;
 

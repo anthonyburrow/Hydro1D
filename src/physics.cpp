@@ -57,8 +57,8 @@ namespace myHydro
 
             hydro.U[i] = hydro.U[i] -
                          hydro.dt *
-                             (myHydro::pi4_sq * R_sq * (dP + dQ) / hydro.DM
-                             + myHydro::G * hydro.XM[i] / R_sq);
+                             (myHydro::pi4_sq * R_sq * (dP + dQ) / hydro.DM +
+                              myHydro::G * hydro.XM[i] / R_sq);
         }
 
         // Outer boundary with dP = dQ = 0
@@ -173,38 +173,43 @@ namespace myHydro
     {
         const double rho = 1 / V;
 
-        // Assume star made up of relativistic fermions (gamma = 4/3)
-        const double Pelectron = myHydro::K4_3 * pow(rho, myHydro::four_thirds);
+        // // Assume star made up of relativistic fermions (gamma = 4/3)
+        // const double Pelectron = myHydro::K4_3 * pow(rho, myHydro::four_thirds);
 
-        if (rho < myHydro::rhoNuc)
-        {
-            // Only electron degeneracy
-            P = Pelectron;
-        }
-        else
-        {
-            // Assume "stiff" gamma = 3 for nuclear degeneracy, plus the
-            //    electron degeneracy term
-            P = Pelectron + myHydro::K3 * pow(rho, 3.0);
-        }
+        // if (rho < myHydro::rhoNuc)
+        // {
+        //     // Only electron degeneracy
+        //     P = Pelectron;
+        // }
+        // else
+        // {
+        //     // Assume "stiff" gamma = 3 for nuclear degeneracy, plus the
+        //     //    electron degeneracy term
+        //     P = Pelectron + myHydro::K3 * pow(rho, 3.0);
+        // }
+
+        P = myHydro::K3 * pow(rho, myHydro::four_thirds);
     }
 
     void calcDt(myHydro::Hydro &hydro)
     {
         // Update dt for stability
-        double newDtht = myHydro::zero;
         double tmpDt;
+        double minDtht;
 
         for (int i = 0; i < hydro.nZones; i++)
         {
             tmpDt = 0.02 * hydro.V[i] * hydro.dtht /
                         abs(hydro.V[i] - hydro.Vprev[i]);
-            
-            if (i == 0 || tmpDt < newDtht) { newDtht = tmpDt; }
+
+            if (i == 0 || tmpDt < minDtht) { minDtht = tmpDt; }
         }
 
-        hydro.dt = 0.5 * (hydro.dtht + newDtht);
-        hydro.dthtPrev = hydro.dtht;
-        hydro.dtht = newDtht;
+        if (hydro.dtht > minDtht)
+        {
+            hydro.dt = 0.5 * (hydro.dtht + minDtht);
+            hydro.dthtPrev = hydro.dtht;
+            hydro.dtht = minDtht;
+        }
     }
 }
